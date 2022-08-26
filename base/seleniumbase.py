@@ -50,3 +50,6 @@ class SeleniumBase:
 
     def screenshot(self, file_name: str) -> str:
         return self.driver.save_screenshot(file_name)
+
+    def get_refresh(self) -> WebElement:
+        return self.driver.refresh()

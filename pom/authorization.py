@@ -94,7 +94,7 @@ class HomePageNavHeaderPersonal(SeleniumBase):
         return self.is_visible('css', self.__nav_link_my_maze, 'мой лабиринт')
 
     def get_header_personal_elements(self) -> List[WebElement]:
-        return self.are_visible('xpath', self.__header_personal_elements, 'сообщения, мой лабиринт отложено, корзина')
+        return self.are_visible('xpath', self.__header_personal_elements, 'сообщения, мой лабиринт, отложено, корзина')
 
     def get_dropdown_menu_my_maze_link(self) -> List[WebElement]:
         return self.are_visible('css', self.__dropdown_menu_my_maze, 'выпадающее меню кнопки мой лабиринт')
@@ -117,6 +117,7 @@ class HomePageNavHeaderPersonal(SeleniumBase):
     def get_basket(self):
         return self.is_visible('xpath', self.__basket, 'моя корзина')
 
+
     def get_full_access_to_labyrinth(self):
         return self.is_visible('xpath', self.__full_access_to_labyrinth, 'полный доступ к лабиринту')
 
@@ -125,7 +126,7 @@ class HomePageNavHeaderPersonal(SeleniumBase):
         return ActionChains(self.driver).click_and_hold(element).perform()
 
     def get_list_header_personal(self) -> List[WebElement]:
-        lst = [self.get_orders(), self.get_orders(), self.get_deferred(), self.get_basket()]
+        lst = [self.get_orders(), self.get_orders(), self.get_deferred(), self.get_basket]
         return lst
 
     def get_list_dropdown_menu_my_maze(self) -> List[WebElement]:

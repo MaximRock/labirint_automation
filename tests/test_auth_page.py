@@ -73,7 +73,8 @@ class TestAuthorization:
 
     def test_icons_auth_social_elements(self):
         """тест проверки работоспособности иканок авторизации через социальные сети,
-        провереа скриншот страницы авторизации соц. сети"""
+        провереа скриншот страницы авторизации соц. сети
+        в папке tests/screenshot/1_authorization/"""
 
         auth_page = HomePageNavAuthorization(self.driver)
         auth_page.get_auth_social_link()
@@ -90,26 +91,32 @@ class TestAuthorization:
 class TestHeaderPersonalMenu:
 
     def test_header_personal_click(self):
+        """тест проверки меню сообщения мой лабиринт отложенно корзина
+        проверка скриншоты в папке:
+        tests/screenshot/2_home_page_header_personal"""
+
         header_personal = HomePageNavHeaderPersonal(self.driver)
 
         for element in range(4):
             header_personal.get_header_personal_elements()[element].click()
-            if header_personal.get_list_header_personal()[element].is_enabled() is True:
-                assert header_personal.get_list_header_personal()[element].is_enabled() is True
-                header_personal.screenshot(
-                    f'tests/screenshot/2_home_page_header_personal/{list_header_personal[element]}.png')
-
+            header_personal.screenshot(f'tests/screenshot/2_home_page_header_personal/{list_header_personal[element]}.png')
 
     def test_dropdown_menu_my_maze_click(self):
+        """тест проверки выпадающего меню мой лабиринт: заказы, вы смотрели, отложенные, болонс, настройки, выход
+        проверка скринщоты в папке :
+        tests/screenshot/3_home_page_header_personal_button_my_maze"""
+
         header_personal = HomePageNavHeaderPersonal(self.driver)
+        header_personal.get_refresh()
         header_personal.place_the_cursor()
 
         for element in range(6):
             header_personal.get_dropdown_menu_my_maze_link()[element].click()
-            if header_personal.get_list_dropdown_menu_my_maze()[element].is_enabled() is True:
-                assert header_personal.get_list_dropdown_menu_my_maze()[element].is_enabled() is True
-                header_personal.screenshot(
-                    f'tests/screenshot/3_home_page_header_personal_button_my_maze/'
-                    f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
-
+            header_personal.screenshot(
+                f'tests/screenshot/3_home_page_header_personal_button_my_maze/'
+                f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
             header_personal.place_the_cursor()
+
+
+
+
