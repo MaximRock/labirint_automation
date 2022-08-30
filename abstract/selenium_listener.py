@@ -1,11 +1,11 @@
 
 from selenium.webdriver.support.events import AbstractEventListener
-from pom.authorization import HomePageNavAuthorization
+from pom.home_page import HomePage
 
 class MyListener(AbstractEventListener):
     def after_find(self, by, value, driver):
-        HomePageNavAuthorization(driver).get_nav_link_my_maze().click()
-        HomePageNavAuthorization(driver).get_nav_link_mail().clear()
+        HomePage(driver).get_nav_link_my_maze().click()
+        HomePage(driver).get_nav_link_mail().clear()
 
 
 

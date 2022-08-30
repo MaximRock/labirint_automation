@@ -2,10 +2,10 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as chrome_options
 from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
+# from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 
-from abstract.selenium_listener import MyListener
-from pom.authorization import HomePageNavAuthorization
+# from abstract.selenium_listener import MyListener
+from pom.home_page import HomePage
 from settings import my_code
 
 
@@ -38,7 +38,7 @@ def setup(request, get_webdriver):
 
 @pytest.fixture(scope='function')
 def auth_my_maze(setup):
-    auth_page = HomePageNavAuthorization(setup)
+    auth_page = HomePage(setup)
     auth_page.get_discount_phone_mail(my_code)
     auth_page.get_button_sig_in().click()
     auth_page.sleep()

@@ -2,13 +2,12 @@ import time
 
 import pytest
 
-from pom.authorization import HomePageNavAuthorization, HomePageNavHeaderPersonal
+from pom.home_page import HomePage
 from settings import my_code, my_login, my_cabinet, list_my_discount_code_negative, list_discount_phone_mail_negative, \
     list_discount_phone_mail_positive, list_social_elements, list_header_personal, \
     list_header_personal_button_my_maze_dropdown_menu
 
 
-# lst_auto_link_text
 
 @pytest.mark.usefixtures('setup')
 class TestAuthorization:
@@ -18,7 +17,7 @@ class TestAuthorization:
          полученной в рузультате ручной авторизации, проверка скриншот
          страницы "личный кабинет, my_cabinet.png"""
 
-        auth_page = HomePageNavAuthorization(self.driver)
+        auth_page = HomePage(self.driver)
         auth_page.get_discount_phone_mail(my_login)
         auth_page.get_my_discount_code(my_code)
         auth_page.sleep()
@@ -35,7 +34,7 @@ class TestAuthorization:
         корректный номер телефона, корректный почтовый адрес,
         проверка активнаная кнопка "Войти"""
 
-        auth_page = HomePageNavAuthorization(self.driver)
+        auth_page = HomePage(self.driver)
         auth_page.get_discount_phone_mail(discount_phone_mail)
 
         assert auth_page.get_nav_link_sig_in().is_enabled() is True
@@ -46,7 +45,7 @@ class TestAuthorization:
         вводимые данные в файле settings.py, в списке list_discount_phone_mail_negative,
         проверка неактивная кнопка "Войти"""
 
-        auth_page = HomePageNavAuthorization(self.driver)
+        auth_page = HomePage(self.driver)
         auth_page.get_discount_phone_mail(discount_phone_mail)
 
         print(f"Вводимое значение - {discount_phone_mail}")
@@ -63,7 +62,7 @@ class TestAuthorization:
         вводимые данные в файле settings.py, в списке list_my_discount_code_negative,
         проверка неактивная кнопка "проверить код и войти"""
 
-        auth_page = HomePageNavAuthorization(self.driver)
+        auth_page = HomePage(self.driver)
         auth_page.get_discount_phone_mail(my_login)
         auth_page.get_my_discount_code(my_discount_code)
 
@@ -76,7 +75,7 @@ class TestAuthorization:
         провереа скриншот страницы авторизации соц. сети
         в папке tests/screenshot/1_authorization/"""
 
-        auth_page = HomePageNavAuthorization(self.driver)
+        auth_page = HomePage(self.driver)
         auth_page.get_auth_social_link()
 
         for index in range(5):
@@ -95,18 +94,19 @@ class TestHeaderPersonalMenu:
         проверка скриншоты в папке:
         tests/screenshot/2_home_page_header_personal"""
 
-        header_personal = HomePageNavHeaderPersonal(self.driver)
+        header_personal = HomePage(self.driver)
 
         for element in range(4):
             header_personal.get_header_personal_elements()[element].click()
-            header_personal.screenshot(f'tests/screenshot/2_home_page_header_personal/{list_header_personal[element]}.png')
+            header_personal.screenshot(
+                f'tests/screenshot/2_home_page_header_personal/{list_header_personal[element]}.png')
 
     def test_dropdown_menu_my_maze_click(self):
         """тест проверки выпадающего меню мой лабиринт: заказы, вы смотрели, отложенные, болонс, настройки, выход
         проверка скринщоты в папке :
         tests/screenshot/3_home_page_header_personal_button_my_maze"""
 
-        header_personal = HomePageNavHeaderPersonal(self.driver)
+        header_personal = HomePage(self.driver)
         header_personal.get_refresh()
         header_personal.place_the_cursor()
 
@@ -116,7 +116,3 @@ class TestHeaderPersonalMenu:
                 f'tests/screenshot/3_home_page_header_personal_button_my_maze/'
                 f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
             header_personal.place_the_cursor()
-
-
-
-
