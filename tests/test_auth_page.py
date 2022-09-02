@@ -5,8 +5,7 @@ import pytest
 from pom.home_page import HomePage
 from settings import my_code, my_login, my_cabinet, list_my_discount_code_negative, list_discount_phone_mail_negative, \
     list_discount_phone_mail_positive, list_social_elements, list_header_personal, \
-    list_header_personal_button_my_maze_dropdown_menu
-
+    list_header_personal_button_my_maze_dropdown_menu, captain_daughter
 
 
 @pytest.mark.usefixtures('setup')
@@ -87,7 +86,7 @@ class TestAuthorization:
 
 @pytest.mark.usefixtures('setup')
 @pytest.mark.usefixtures('auth_my_maze')
-class TestHeaderPersonalMenu:
+class TestHeaderMenu:
 
     def test_header_personal_click(self):
         """тест проверки меню сообщения мой лабиринт отложенно корзина
@@ -96,13 +95,13 @@ class TestHeaderPersonalMenu:
 
         header_personal = HomePage(self.driver)
 
-        for element in range(4):
+        for element in range(len(header_personal.get_header_personal_elements())):
             header_personal.get_header_personal_elements()[element].click()
             header_personal.screenshot(
                 f'tests/screenshot/2_home_page_header_personal/{list_header_personal[element]}.png')
 
     def test_dropdown_menu_my_maze_click(self):
-        """тест проверки выпадающего меню мой лабиринт: заказы, вы смотрели, отложенные, болонс, настройки, выход
+        """тест проверки выпадающего меню мой лабиринт: заказы, вы смотрели, отложенные, балонс, настройки, выход
         проверка скринщоты в папке :
         tests/screenshot/3_home_page_header_personal_button_my_maze"""
 
@@ -110,9 +109,24 @@ class TestHeaderPersonalMenu:
         header_personal.get_refresh()
         header_personal.place_the_cursor()
 
-        for element in range(6):
+        for element in range(len(header_personal.get_dropdown_menu_my_maze_link())):
             header_personal.get_dropdown_menu_my_maze_link()[element].click()
             header_personal.screenshot(
                 f'tests/screenshot/3_home_page_header_personal_button_my_maze/'
                 f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
             header_personal.place_the_cursor()
+
+    def test_adding_product_to_cart(self):
+        """Тест проверки добавления товара в корзину,
+        проверка: видимость заголовка 'В корзине', если товар отсутствует на склоде выводим сообщение,
+        проверяем всегда первую левую книгу"""
+
+        adding_product = HomePage(self.driver)
+
+        adding_product.get_maze_search().send_keys(captain_daughter)
+        adding_product.get_search_click_and_click_book()
+        if adding_product.get_in_stock().is_displayed():
+            adding_product.get_add_to_cart_and_basket_click()
+            assert adding_product.get_in_the_basket() == 'В корзине'
+        else:
+            print('Товар отсутствует на складе')

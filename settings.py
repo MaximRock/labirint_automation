@@ -1,6 +1,7 @@
 my_login = 'testrock75@gmail.com'
 my_code = '0CC2-4F28-831B'
 my_cabinet = 'Личный кабинет'
+captain_daughter = 'Капитанская дочка'
 
 
 def special_chars():

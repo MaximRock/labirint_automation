@@ -28,7 +28,18 @@ class HomePage(SeleniumBase):
         self.__nav_link_my_maze: str = 'div>ul>li>a[class*=js-b-autofade-wrap]'
         self.__header_personal_elements: str = "//ul[contains(@class, 'b-header-b-personal-e-list ul-justify')]/li[position() > 2]"
         self.__dropdown_menu_my_maze: str = 'ul[class=user-top-menu]>li'
+        self.__maze_search: str = '//input[@placeholder="Поиск по Лабиринту"]'
+        self.__search_button: str = '//span[starts-with(text(),"Искать")]'
+        self.__book: str = "//div[contains(@class, 'genres-carousel__container  products-row' )]/div[position()=1]"
+        self.__add_to_cart: str = "//span[starts-with(text(),'в корзину')]"
+        self.__basket: str = "//span[starts-with(text(),'Корзина')]"
+        self.___in_the_basket: str = "//span[starts-with(text(),'В корзине')]"
+        self.__in_stock: str = "//span[starts-with(text(),'На складе')]"
 
+#//span[starts-with(text(),'На складе')]
+#//span[starts-with(text(),'В корзине')]
+#//span[starts-with(text(),"в корзину")].
+        #//div[contains(@class, 'genres-carousel__container  products-row' )]/div[position()=1]
 
     def get_nav_link_my_maze(self) -> WebElement:
         """Панель личного кабинета ссылка - мой лобиринт"""
@@ -102,3 +113,43 @@ class HomePage(SeleniumBase):
         """Метод класса - выбор выпадающего меню кнопки мой лобиринт"""
         element = self.get_nav_link_my_maze()
         return ActionChains(self.driver).click_and_hold(element).perform()
+
+    def get_maze_search(self) -> WebElement:
+        """Добавление товара в карзину - поле ввода поиск по лабиринту"""
+        return self.is_visible('xpath', self.__maze_search, 'Поле ввода Поиск по Лабиринту')
+
+    def get_search_button(self) -> WebElement:
+        """Добавление товара в карзину - кнопка искать в поле поиска по лабиринту"""
+        return self.is_visible('xpath', self.__search_button, 'кнопка искать в поле поиска по лабиринту')
+
+    def get_book(self) -> WebElement:
+        """Добавление товара в карзину - первая книга результат поиска"""
+        return self.is_visible('xpath', self.__book, 'первая книга результат поиска')
+
+    def get_add_to_cart(self) -> WebElement:
+        """Добавление товара в карзину - кнопка 'добавить в корзину'"""
+        return self.is_visible('xpath', self.__add_to_cart, 'кнопка добавить в корзину')
+
+    def get_basket(self) -> WebElement:
+        """Добавление товара в карзину - кнопка 'корзина'"""
+        return self.is_visible('xpath', self.__basket, 'кнопка моя корзина')
+
+    def get_in_the_basket(self) -> str:
+        """Добавление товара в карзину - проверка товара в корзине"""
+        return self.is_visible('xpath', self.___in_the_basket, 'проверка товара в корзине').text
+
+    def get_in_stock(self) -> WebElement:
+        """Добавление товара в карзину - проверка наличия товара на складе"""
+        return self.is_visible('xpath', self.__in_stock, 'проверка наличия товара на складе')
+
+    def get_search_click_and_click_book(self) -> None:
+        """Добавление товара в карзину - метод класса,
+        нажать на кнопку искать и на книгу"""
+        self.get_search_button().click()
+        self.get_book().click()
+
+    def get_add_to_cart_and_basket_click(self) -> None:
+        """Добавление товара в карзину - метод класса,
+        нажать на добавить в корзину и корзина"""
+        self.get_add_to_cart().click()
+        self.get_basket().click()
