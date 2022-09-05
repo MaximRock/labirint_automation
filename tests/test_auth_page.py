@@ -5,11 +5,12 @@ import pytest
 from pom.home_page import HomePage
 from settings import my_code, my_login, my_cabinet, list_my_discount_code_negative, list_discount_phone_mail_negative, \
     list_discount_phone_mail_positive, list_social_elements, list_header_personal, \
-    list_header_personal_button_my_maze_dropdown_menu, captain_daughter
+    list_header_personal_button_my_maze_dropdown_menu, captain_daughter, list_of_values_in_the_search_field
 
 
 @pytest.mark.usefixtures('setup')
 class TestAuthorization:
+    """Тест авторизации на сайте"""
 
     def test_auth_my_maze(self):
         """тест полной авторизации на сайте с использованием кода скидки
@@ -87,6 +88,7 @@ class TestAuthorization:
 @pytest.mark.usefixtures('setup')
 @pytest.mark.usefixtures('auth_my_maze')
 class TestHeaderMenu:
+    """Тест добавления товара в корзину"""
 
     def test_header_personal_click(self):
         """тест проверки меню сообщения мой лабиринт отложенно корзина
@@ -116,6 +118,10 @@ class TestHeaderMenu:
                 f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
             header_personal.place_the_cursor()
 
+@pytest.mark.usefixtures('setup')
+@pytest.mark.usefixtures('auth_my_maze')
+class TestAddingProduct:
+
     def test_adding_product_to_cart(self):
         """Тест проверки добавления товара в корзину,
         проверка: видимость заголовка 'В корзине', если товар отсутствует на склоде выводим сообщение,
@@ -130,3 +136,44 @@ class TestHeaderMenu:
             assert adding_product.get_in_the_basket() == 'В корзине'
         else:
             print('Товар отсутствует на складе')
+
+
+@pytest.mark.usefixtures('setup')
+class TestSearch:
+    """Тест поля "Поиска" на главной странице"""
+    def test_search_relevance_check(self):
+        """Тест релевантности поиска по названию книги,
+        создаем список результатов поиска на главной странице,
+        проверка - проверяем наличие названия книги во всех результатах поиска на главной странице"""
+        search_field = HomePage(self.driver)
+
+        search_field.get_maze_search().send_keys(captain_daughter)
+        search_field.get_search_button().click()
+
+        lst_search_book = search_field.get_adding_element_to_list(search_field.get_captains_daughter())
+        assert captain_daughter in lst_search_book
+        print(f'Название книги "{captain_daughter}" присутствует во всех результатах поиска на главной странице')
+
+    @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field)
+    def test_captains_daughter_search(self, search_input_captain_daughter):
+        """Тест проверки поле ввода Поиск используя параметризацию,
+        даные ввода файл settings.py в списке list_of_values_in_the_search_field"""
+        search_field = HomePage(self.driver)
+
+        search_field.get_maze_search().send_keys(search_input_captain_daughter)
+        search_field.get_search_button().click()
+
+        lst_search_book = search_field.get_adding_element_to_list(search_field.get_captains_daughter())
+        assert captain_daughter in lst_search_book
+        print(f'вводимое значение {search_input_captain_daughter}')
+        print(f'Название книги "{captain_daughter}" присутствует во всех результатах поиска на главной странице')
+
+
+
+
+
+
+
+
+
+

@@ -21,6 +21,8 @@ import pytest
 #         self.__settings: str = "//span[contains(text(),'Мои данные')]"
 #         self.__full_access_to_labyrinth: str = "//span[contains(text(),'Авторизоваться в личном кабинете')]"
 #         self.__basket: str = "//a[contains(text(),'Моя корзина')]"
+
+# lst_search_book = [x.text for x in search_field.get_captains_daughter()]
 #
 #     def get_nav_link_my_maze(self) -> WebElement:
 #         return self.is_visible('css', self.__nav_link_my_maze, 'мой лабиринт')

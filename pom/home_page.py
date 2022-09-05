@@ -30,12 +30,17 @@ class HomePage(SeleniumBase):
         self.__dropdown_menu_my_maze: str = 'ul[class=user-top-menu]>li'
         self.__maze_search: str = '//input[@placeholder="Поиск по Лабиринту"]'
         self.__search_button: str = '//span[starts-with(text(),"Искать")]'
-        self.__book: str = "//div[contains(@class, 'genres-carousel__container  products-row' )]/div[position()=1]"
+        self.__book: str = "//div[contains(@class, 'genres-carousel__container  products-row')]/div[position()=1]"
         self.__add_to_cart: str = "//span[starts-with(text(),'в корзину')]"
         self.__basket: str = "//span[starts-with(text(),'Корзина')]"
-        self.___in_the_basket: str = "//span[starts-with(text(),'В корзине')]"
+        self.__in_the_basket: str = "//span[starts-with(text(),'В корзине')]"
         self.__in_stock: str = "//span[starts-with(text(),'На складе')]"
+        self.__captains_daughter: str = "//a[@class='product-title-link']/span[contains(text(),'Капитанская дочка')]"
 
+
+
+#//a[@class='product-title-link']/span[starts-with(text(),'Капитанская дочка')]
+#//span[starts-with(text(),'Капитанская дочка')]
 #//span[starts-with(text(),'На складе')]
 #//span[starts-with(text(),'В корзине')]
 #//span[starts-with(text(),"в корзину")].
@@ -136,7 +141,7 @@ class HomePage(SeleniumBase):
 
     def get_in_the_basket(self) -> str:
         """Добавление товара в карзину - проверка товара в корзине"""
-        return self.is_visible('xpath', self.___in_the_basket, 'проверка товара в корзине').text
+        return self.is_visible('xpath', self.__in_the_basket, 'проверка товара в корзине').text
 
     def get_in_stock(self) -> WebElement:
         """Добавление товара в карзину - проверка наличия товара на складе"""
@@ -153,3 +158,9 @@ class HomePage(SeleniumBase):
         нажать на добавить в корзину и корзина"""
         self.get_add_to_cart().click()
         self.get_basket().click()
+
+    def get_captains_daughter(self) -> List[WebElement]:
+        """Строка поиска - список книг результат поиска"""
+        return self.are_visible('xpath', self.__captains_daughter, 'список книг результат поиска')
+
+

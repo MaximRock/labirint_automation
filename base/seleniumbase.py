@@ -62,3 +62,7 @@ class SeleniumBase:
     def get_refresh(self) -> WebElement:
         """Обновить страницу"""
         return self.driver.refresh()
+
+    def get_adding_element_to_list(self, elements: List[WebElement]) -> list[str]:
+        """Создание списка текста WebElement - ов"""
+        return [element.text for element in elements]
