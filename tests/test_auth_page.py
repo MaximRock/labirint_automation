@@ -1,11 +1,13 @@
+import re
 import time
 
 import pytest
 
+from base.utils import Utils
 from pom.home_page import HomePage
 from settings import my_code, my_login, my_cabinet, list_my_discount_code_negative, list_discount_phone_mail_negative, \
     list_discount_phone_mail_positive, list_social_elements, list_header_personal, \
-    list_header_personal_button_my_maze_dropdown_menu, captain_daughter, list_of_values_in_the_search_field
+    list_header_personal_button_my_maze_dropdown_menu, captain_daughter, list_of_values_in_the_search_field, book_author
 
 
 @pytest.mark.usefixtures('setup')
@@ -118,6 +120,7 @@ class TestHeaderMenu:
                 f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
             header_personal.place_the_cursor()
 
+
 @pytest.mark.usefixtures('setup')
 @pytest.mark.usefixtures('auth_my_maze')
 class TestAddingProduct:
@@ -141,6 +144,7 @@ class TestAddingProduct:
 @pytest.mark.usefixtures('setup')
 class TestSearch:
     """Тест поля "Поиска" на главной странице"""
+
     def test_search_relevance_check(self):
         """Тест релевантности поиска по названию книги,
         создаем список результатов поиска на главной странице,
@@ -150,9 +154,11 @@ class TestSearch:
         search_field.get_maze_search().send_keys(captain_daughter)
         search_field.get_search_button().click()
 
-        lst_search_book = search_field.get_adding_element_to_list(search_field.get_captains_daughter())
-        assert captain_daughter in lst_search_book
-        print(f'Название книги "{captain_daughter}" присутствует во всех результатах поиска на главной странице')
+        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), captain_daughter)
+
+        for element in lst_book:
+            assert element == captain_daughter, 'проверка по циклу найденого элемента с вводимым названием книги'
+            print(f'Название книги "{captain_daughter}" присутствует во всех результатах поиска на главной странице')
 
     @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field)
     def test_captains_daughter_search(self, search_input_captain_daughter):
@@ -163,17 +169,10 @@ class TestSearch:
         search_field.get_maze_search().send_keys(search_input_captain_daughter)
         search_field.get_search_button().click()
 
-        lst_search_book = search_field.get_adding_element_to_list(search_field.get_captains_daughter())
-        assert captain_daughter in lst_search_book
+        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), captain_daughter)
+
+        for element in lst_book:
+            assert element == captain_daughter, 'проверка по циклу найденого элемента с вводимым названием книги'
+
         print(f'вводимое значение {search_input_captain_daughter}')
         print(f'Название книги "{captain_daughter}" присутствует во всех результатах поиска на главной странице')
-
-
-
-
-
-
-
-
-
-

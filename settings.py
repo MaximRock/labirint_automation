@@ -2,6 +2,7 @@ my_login = 'testrock75@gmail.com'
 my_code = '7546-4A0C-AE8E'
 my_cabinet = 'Личный кабинет'
 captain_daughter = 'Капитанская дочка'
+book_author = 'Пушкин Александр Сергеевич'
 
 
 def special_chars():

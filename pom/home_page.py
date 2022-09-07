@@ -1,10 +1,13 @@
 import time
+import re
 
 from selenium.webdriver import ActionChains
 
 from base.seleniumbase import SeleniumBase
 from selenium.webdriver.remote.webelement import WebElement
-from typing import List
+from typing import List, Any
+
+from base.utils import Utils
 
 
 class HomePage(SeleniumBase):
@@ -35,16 +38,18 @@ class HomePage(SeleniumBase):
         self.__basket: str = "//span[starts-with(text(),'Корзина')]"
         self.__in_the_basket: str = "//span[starts-with(text(),'В корзине')]"
         self.__in_stock: str = "//span[starts-with(text(),'На складе')]"
-        self.__captains_daughter: str = "//a[@class='product-title-link']/span[contains(text(),'Капитанская дочка')]"
+        self.__name_of_the_book: str = "//a[@class='product-title-link']/span"
+        self.__author_book_pushkin: str = "//a[@title='Пушкин Александр Сергеевич']/span[contains(text(),'Пушкин Александр Сергеевич')]"
 
 
-
-#//a[@class='product-title-link']/span[starts-with(text(),'Капитанская дочка')]
-#//span[starts-with(text(),'Капитанская дочка')]
-#//span[starts-with(text(),'На складе')]
-#//span[starts-with(text(),'В корзине')]
-#//span[starts-with(text(),"в корзину")].
-        #//div[contains(@class, 'genres-carousel__container  products-row' )]/div[position()=1]
+    #//a[@class='product-title-link']/span
+    # //a[@title='Пушкин Александр Сергеевич']/span[contains(text(),'Пушкин Александр Сергеевич')]
+    # //a[@class='product-title-link']/span[starts-with(text(),'Капитанская дочка')]
+    # //span[starts-with(text(),'Капитанская дочка')]
+    # //span[starts-with(text(),'На складе')]
+    # //span[starts-with(text(),'В корзине')]
+    # //span[starts-with(text(),"в корзину")].
+    # //div[contains(@class, 'genres-carousel__container  products-row' )]/div[position()=1]
 
     def get_nav_link_my_maze(self) -> WebElement:
         """Панель личного кабинета ссылка - мой лобиринт"""
@@ -159,8 +164,15 @@ class HomePage(SeleniumBase):
         self.get_add_to_cart().click()
         self.get_basket().click()
 
-    def get_captains_daughter(self) -> List[WebElement]:
+    def get_name_of_the_book(self) -> List[WebElement]:
         """Строка поиска - список книг результат поиска"""
-        return self.are_visible('xpath', self.__captains_daughter, 'список книг результат поиска')
+        return self.are_visible('xpath', self.__name_of_the_book, 'список книг результат поиска')
 
+    def get_book_string(self, lst_webelement: List[WebElement], search_variable: str) -> list[Any]:
+        """Метод класса - создает список, преобразует в строку и находит элемент по шаблону"""
+        lst_book = self.get_adding_element_to_list(lst_webelement)  # создает список
+        check_lst_book = Utils.get_join_string(lst_book)  # преобразует в строку
+        return re.findall(search_variable, check_lst_book)  # находит элемент
 
+    def get_author_book_pushkin(self) -> List[WebElement]:
+        return self.are_visible('xpath', self.__author_book_pushkin, 'список автора Пушкин А.С.')
