@@ -39,9 +39,15 @@ class HomePage(SeleniumBase):
         self.__in_the_basket: str = "//span[starts-with(text(),'В корзине')]"
         self.__in_stock: str = "//span[starts-with(text(),'На складе')]"
         self.__name_of_the_book: str = "//a[@class='product-title-link']/span"
-        self.__author_book_pushkin: str = "//a[@title='Пушкин Александр Сергеевич']/span[contains(text(),'Пушкин Александр Сергеевич')]"
+        self.__author_book: str = "//div[@class='product-author']/a/span"
+        self.__search_error_book: str = "//div[@class='search-error bestsellers']/h1"
+        self.__header_menu_list: str = "//ul[@class='b-header-b-menu-e-list']/li"
 
 
+
+#//ul[@class='b-header-b-menu-e-list'] /li
+#//div[@class='search-error bestsellers'] /h1
+    #//div[@class='product-author']/a/span
     #//a[@class='product-title-link']/span
     # //a[@title='Пушкин Александр Сергеевич']/span[contains(text(),'Пушкин Александр Сергеевич')]
     # //a[@class='product-title-link']/span[starts-with(text(),'Капитанская дочка')]
@@ -125,11 +131,11 @@ class HomePage(SeleniumBase):
         return ActionChains(self.driver).click_and_hold(element).perform()
 
     def get_maze_search(self) -> WebElement:
-        """Добавление товара в карзину - поле ввода поиск по лабиринту"""
+        """Поле ввода поиск по лабиринту"""
         return self.is_visible('xpath', self.__maze_search, 'Поле ввода Поиск по Лабиринту')
 
     def get_search_button(self) -> WebElement:
-        """Добавление товара в карзину - кнопка искать в поле поиска по лабиринту"""
+        """Кнопка искать в поле поиска по лабиринту"""
         return self.is_visible('xpath', self.__search_button, 'кнопка искать в поле поиска по лабиринту')
 
     def get_book(self) -> WebElement:
@@ -168,11 +174,24 @@ class HomePage(SeleniumBase):
         """Строка поиска - список книг результат поиска"""
         return self.are_visible('xpath', self.__name_of_the_book, 'список книг результат поиска')
 
+    def get_author_book(self) -> List[WebElement]:
+        """Строка поиска - список автора книги результат поиска"""
+        return self.are_visible('xpath', self.__author_book, 'список авторов')
+
+    def get_search_error_book(self) -> WebElement:
+        return self.is_visible('xpath', self.__search_error_book, 'неудачный поиск книги')
+
+    def get_search_input_field(self, search_element: str) -> None:
+        """Поле поиска - вводим значение и нажимаем кнопку искать"""
+        self.get_maze_search().send_keys(search_element)
+        self.get_search_button().click()
+
     def get_book_string(self, lst_webelement: List[WebElement], search_variable: str) -> list[Any]:
         """Метод класса - создает список, преобразует в строку и находит элемент по шаблону"""
         lst_book = self.get_adding_element_to_list(lst_webelement)  # создает список
         check_lst_book = Utils.get_join_string(lst_book)  # преобразует в строку
         return re.findall(search_variable, check_lst_book)  # находит элемент
 
-    def get_author_book_pushkin(self) -> List[WebElement]:
-        return self.are_visible('xpath', self.__author_book_pushkin, 'список автора Пушкин А.С.')
+    def get_header_menu_list(self) -> List[WebElement]:
+        """"""
+        return self.are_visible('xpath', self.__header_menu_list, 'header меню список')

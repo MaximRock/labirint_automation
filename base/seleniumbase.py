@@ -13,7 +13,7 @@ class SeleniumBase:
         self.__wait = WebDriverWait(driver, 15, 0.3, ignored_exceptions=StaleElementReferenceException)
 
     def __get_selenium_by(self, find_by: str) -> dict:
-        """Список локаторов в котором ключ это - строка локатор писка, значения связанны значениями поска"""
+        """Список локаторов в котором ключ это - строка локатор списка, значения связанны значениями поиска"""
         find_by = find_by.lower()
         locating = {'css': By.CSS_SELECTOR,
                     'xpath': By.XPATH,
@@ -62,6 +62,10 @@ class SeleniumBase:
     def get_refresh(self) -> WebElement:
         """Обновить страницу"""
         return self.driver.refresh()
+
+    def get_current_url(self) -> WebElement:
+        """url страницы на которой находимся"""
+        return self.driver.current_url
 
     def get_adding_element_to_list(self, elements: List[WebElement]) -> list[str]:
         """Создание списка текста WebElement - ов"""

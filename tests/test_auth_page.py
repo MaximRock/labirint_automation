@@ -7,7 +7,10 @@ from base.utils import Utils
 from pom.home_page import HomePage
 from settings import my_code, my_login, my_cabinet, list_my_discount_code_negative, list_discount_phone_mail_negative, \
     list_discount_phone_mail_positive, list_social_elements, list_header_personal, \
-    list_header_personal_button_my_maze_dropdown_menu, captain_daughter, list_of_values_in_the_search_field, book_author
+    list_header_personal_button_my_maze_dropdown_menu, book_russian, list_of_values_in_the_search_field_rassian, \
+    book_author_russian, list_of_values_in_the_search_field_english, book_author_english, book_titles_english, \
+    book_titles_edgar_raven, book_author_edgar_allan_poe, list_of_values_in_the_search_field_edgar_allan_poe_raven, \
+    list_of_values_in_the_search_field_empty_spaces
 
 
 @pytest.mark.usefixtures('setup')
@@ -89,7 +92,7 @@ class TestAuthorization:
 
 @pytest.mark.usefixtures('setup')
 @pytest.mark.usefixtures('auth_my_maze')
-class TestHeaderMenu:
+class TestHeaderMenuPersonal:
     """Тест добавления товара в корзину"""
 
     def test_header_personal_click(self):
@@ -132,7 +135,7 @@ class TestAddingProduct:
 
         adding_product = HomePage(self.driver)
 
-        adding_product.get_maze_search().send_keys(captain_daughter)
+        adding_product.get_maze_search().send_keys(book_russian)
         adding_product.get_search_click_and_click_book()
         if adding_product.get_in_stock().is_displayed():
             adding_product.get_add_to_cart_and_basket_click()
@@ -148,31 +151,115 @@ class TestSearch:
     def test_search_relevance_check(self):
         """Тест релевантности поиска по названию книги,
         создаем список результатов поиска на главной странице,
-        проверка - проверяем наличие названия книги во всех результатах поиска на главной странице"""
+        проверка - название и автор книги совпадают с ожидаемым рзультатом"""
         search_field = HomePage(self.driver)
+        search_field.get_search_input_field(book_russian)
 
-        search_field.get_maze_search().send_keys(captain_daughter)
-        search_field.get_search_button().click()
+        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_russian)
+        if len(lst_book) > 0:
+            for element in lst_book:
+                assert element == book_russian, 'в списке книг есть элементы'
+        else:
+            assert lst_book == book_russian, 'список книг пустой'
 
-        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), captain_daughter)
+        lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_russian)
+        if len(lst_book) > 0:
+            for element in lst_author:
+                assert element == book_author_russian, 'в списке книг есть элементы'
+        else:
+            assert lst_book == book_author_russian, 'список книг пустой'
 
-        for element in lst_book:
-            assert element == captain_daughter, 'проверка по циклу найденого элемента с вводимым названием книги'
-            print(f'Название книги "{captain_daughter}" присутствует во всех результатах поиска на главной странице')
-
-    @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field)
-    def test_captains_daughter_search(self, search_input_captain_daughter):
-        """Тест проверки поле ввода Поиск используя параметризацию,
-        даные ввода файл settings.py в списке list_of_values_in_the_search_field"""
+    @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field_rassian)
+    def test_book_russian_search(self, search_input_captain_daughter):
+        """Тест проверки поле ввода Поиск используя параметризацию на русском языке,
+        даные ввода файл settings.py в списке list_of_values_in_the_search_field_rassian"""
         search_field = HomePage(self.driver)
+        search_field.get_search_input_field(search_input_captain_daughter)
 
-        search_field.get_maze_search().send_keys(search_input_captain_daughter)
-        search_field.get_search_button().click()
+        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_russian)
+        if len(lst_book) > 0:
+            for element in lst_book:
+                assert element == book_russian, 'в списке книг есть элементы'
+        else:
+            assert lst_book == book_russian, 'список книг пустой'
 
-        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), captain_daughter)
-
-        for element in lst_book:
-            assert element == captain_daughter, 'проверка по циклу найденого элемента с вводимым названием книги'
+        lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_russian)
+        if len(lst_book) > 0:
+            for element in lst_author:
+                assert element == book_author_russian, 'в списке книг есть элементы'
+        else:
+            assert lst_book == book_author_russian, 'список книг пустой'
 
         print(f'вводимое значение {search_input_captain_daughter}')
-        print(f'Название книги "{captain_daughter}" присутствует во всех результатах поиска на главной странице')
+
+    @pytest.mark.parametrize("search_input_programming_on_python", list_of_values_in_the_search_field_english)
+    def test_book_english_search(self, search_input_programming_on_python):
+        """Тест проверки поле ввода Поиск используя параметризацию на английском языке,
+        даные ввода файл settings.py в списке list_of_values_in_the_search_field_english"""
+        search_field = HomePage(self.driver)
+        search_field.get_search_input_field(search_input_programming_on_python)
+
+        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_english)
+        if len(lst_book) > 0:
+            for element in lst_book:
+                assert element == book_titles_english, 'в списке книг есть элементы'
+        else:
+            assert lst_book == book_titles_english, 'список книг пустой'
+
+        lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_english)
+        if len(lst_book) > 0:
+            for element in lst_author:
+                assert element == book_author_english, 'в списке книг есть элементы'
+        else:
+            assert lst_book == book_author_english, 'список книг пустой'
+
+        print(f'вводимое значение {search_input_programming_on_python}')
+
+    @pytest.mark.parametrize("search_input_edgar_allan_poe_raven",
+                             list_of_values_in_the_search_field_edgar_allan_poe_raven)
+    def test_edgar_allan_poe_raven(self, search_input_edgar_allan_poe_raven):
+        """Тест проверки нижнего предела поиска - осуществляем поиск по имени автора 'По Эдгар Аллан' и
+        названия книги 'Ворон', первый тест passed, остальные failed,
+        даные ввода файл settings.py в списке list_of_values_in_the_search_field_edgar_allan_poe_raven"""
+        search_field = HomePage(self.driver)
+        search_field.get_search_input_field(search_input_edgar_allan_poe_raven)
+
+        lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_edgar_raven)
+        if len(lst_book) > 0:
+            for element in lst_book:
+                assert element == book_titles_edgar_raven, 'в списке книг есть элементы'
+        else:
+            assert lst_book == book_titles_edgar_raven, 'список книг пустой'
+
+        lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_edgar_allan_poe)
+        if len(lst_author) > 0:
+            for element in lst_book:
+                assert element == book_titles_edgar_raven, 'в списке авторов есть элементы'
+        else:
+            assert lst_author == book_titles_edgar_raven, 'список авторов пустой'
+
+        print(f'вводимое значение {search_input_edgar_allan_poe_raven}')
+
+    @pytest.mark.parametrize("search_input_empty_spaces",
+                             list_of_values_in_the_search_field_empty_spaces)
+    def test_field_empty_spaces(self, search_input_empty_spaces):
+        """Тест проверки поиска при пустом значении, при вводе одного пробела, двух пробелов"""
+        search_field = HomePage(self.driver)
+        search_field.get_search_input_field(search_input_empty_spaces)
+        current_url = search_field.get_current_url()
+        if current_url == 'https://www.labirint.ru/':
+            assert current_url == 'https://www.labirint.ru/', 'если url страниц равны тест passed'
+        else:
+            assert search_field.get_search_error_book().is_displayed(), 'видим на странице - Мы ничего не нашли по ' \
+                                                                        'вашему запросу! Что делать? '
+
+        print(f'вводимое значение {search_input_empty_spaces}')
+
+@pytest.mark.usefixtures('setup')
+class TestHeaderMenu:
+    """"""
+    def test_header_menu_click(self):
+        """"""
+        header_menu = HomePage(self.driver)
+        header_menu.get_header_menu_list().click()
+

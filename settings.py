@@ -1,8 +1,12 @@
 my_login = 'testrock75@gmail.com'
 my_code = '7546-4A0C-AE8E'
 my_cabinet = 'Личный кабинет'
-captain_daughter = 'Капитанская дочка'
-book_author = 'Пушкин Александр Сергеевич'
+book_russian = 'Капитанская дочка'
+book_author_russian = 'Пушкин Александр Сергеевич'
+book_titles_english = 'Программирование на Python'
+book_author_english = 'Щерба Анастасия Владимировна'
+book_titles_edgar_raven = 'Ворон'
+book_author_edgar_allan_poe = 'По Эдгар Аллан'
 
 
 def special_chars():
@@ -30,15 +34,15 @@ list_my_discount_code_negative = [
 
 """Для теста авторизации"""
 list_discount_phone_mail_positive = [
-    '+79291295001', my_login, my_code
+    '+79291298001', my_login, my_code
 ]
 
-"""Для теста авторизации"""
+"""Для теста авторизации, имя файла скринщота"""
 list_social_elements = [
     'ВКонтакте', 'ОК', '@mail', 'Яндекс', 'Google'
 ]
 
-"""Для теста личного кабинета в header"""
+"""Для теста личного кабинета в header, имя файла скринщота"""
 list_header_personal = [
     'Сообщения', 'Мой лабиринт', 'Отложено', 'Корзина'
 ]
@@ -49,15 +53,26 @@ list_header_personal_button_my_maze_dropdown_menu = [
 ]
 
 """Для теста поля Поиск, вводимое значение Капитанская дочка"""
-list_of_values_in_the_search_field = [
+list_of_values_in_the_search_field_rassian = [
     'Капитанская Дочка', 'капитанская дочка', 'КАПИТАНСКАЯ ДОЧКА', 'КаПиТаНсКаЯ дОчКа', 'дочка капитанская',
     'rfgbnfycrfz ljxrf', 'каитанская дка', '  капитанская дочка', 'капитанская дочка  ',
     'капитанская    дочка', '|\\/!@#$%^&*()-_=+`~?"№;:[]{}капитанская дочка',
-    'капитанская|\\/!@#$%^&*()-_=+`~?"№;:[]{} дочка', 'капитанская дочка|\\/!@#$%^&*()-_=+`~?"№;:[]{}'
+    'капитанская|\\/!@#$%^&*()-_=+`~?"№;:[]{} дочка', 'капитанская дочка|\\/!@#$%^&*()-_=+`~?"№;:[]{}' 'дочка',
+    'капитан', 'капитанская', 'Пушкин Александр Сергеевич', 'Пушкин'
 ]
 
-# idis_list_discount_phone_mail_negative = [
-#     'empty_value', 'email_no_name', 'email_no_dot', 'email_cyrillic', 'negative_number', 'zero', 'phone_5_characters',
-#     'phone_8_characters', 'phone_10_characters', 'invalid_discount_code', '1001_characters', 'russian',
-#     'RASSIAN', 'specials'
-# ]
+"""Для теста поля Поиск, вводимое значение Программирование на Python"""
+list_of_values_in_the_search_field_english = [
+    'Программирование на Python', 'Python программирование', 'Python', 'Программирование',
+    'Щерба Анастасия Владимировна', 'Щерба'
+]
+
+"""Для теста поля Поиск, вводимое значение 'по эдгар алан ворон', тест 'эдгар ворон' passed, остальные failed"""
+list_of_values_in_the_search_field_edgar_allan_poe_raven = [
+    'эдгар ворон', 'по ворон', 'по алан ворон', 'алан ворон'
+]
+
+"""Для теста поля Поиск, вводимые значения - пустое поле, один пробел, два пробела"""
+list_of_values_in_the_search_field_empty_spaces = [
+    '', ' ', '  '
+]
