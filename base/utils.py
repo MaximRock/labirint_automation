@@ -1,6 +1,8 @@
 import re
 from typing import List, Any
 
+from selenium.webdriver.remote.webelement import WebElement
+
 
 class Utils:
 

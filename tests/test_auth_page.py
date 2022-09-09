@@ -114,14 +114,14 @@ class TestHeaderMenuPersonal:
 
         header_personal = HomePage(self.driver)
         header_personal.get_refresh()
-        header_personal.place_the_cursor()
+        header_personal.place_the_cursor(header_personal.get_nav_link_my_maze())
 
         for element in range(len(header_personal.get_dropdown_menu_my_maze_link())):
             header_personal.get_dropdown_menu_my_maze_link()[element].click()
             header_personal.screenshot(
                 f'tests/screenshot/3_home_page_header_personal_button_my_maze/'
                 f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
-            header_personal.place_the_cursor()
+            header_personal.place_the_cursor(header_personal.get_nav_link_my_maze())
 
 
 @pytest.mark.usefixtures('setup')
@@ -261,5 +261,21 @@ class TestHeaderMenu:
     def test_header_menu_click(self):
         """"""
         header_menu = HomePage(self.driver)
-        header_menu.get_header_menu_list().click()
+        list_header_menu_text = []
+        for element in range(len(header_menu.get_header_menu_list())):
+            header_menu.get_header_menu_list()[element].click()
+            list_header_menu_text.append(header_menu.get_header_menu_headlines().text)
+            assert header_menu.get_header_menu_headlines().text == list_header_menu_text[element]
+        print(list_header_menu_text)
+
+    def test_header_menu_link_more(self):
+        """"""
+        header_menu = HomePage(self.driver)
+
+        header_menu.place_the_cursor(header_menu.get_header_menu_link_more()).click()
+
+
+
+
+
 

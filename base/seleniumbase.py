@@ -1,10 +1,11 @@
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 
-from typing import List
+from typing import List, Any
 
 
 class SeleniumBase:
@@ -67,6 +68,11 @@ class SeleniumBase:
         """url страницы на которой находимся"""
         return self.driver.current_url
 
+    def place_the_cursor(self, element: WebElement) -> WebElement:
+        """Метод класса - выбор выпадающего меню кнопки мой лобиринт"""
+        return ActionChains(self.driver).click_and_hold(element).perform()
+
     def get_adding_element_to_list(self, elements: List[WebElement]) -> list[str]:
         """Создание списка текста WebElement - ов"""
         return [element.text for element in elements]
+

@@ -41,10 +41,12 @@ class HomePage(SeleniumBase):
         self.__name_of_the_book: str = "//a[@class='product-title-link']/span"
         self.__author_book: str = "//div[@class='product-author']/a/span"
         self.__search_error_book: str = "//div[@class='search-error bestsellers']/h1"
-        self.__header_menu_list: str = "//ul[@class='b-header-b-menu-e-list']/li"
+        self.__header_menu_list: str = "//ul[@class='b-header-b-menu-e-list']/li[position()<6]"
+        self.__header_menu_headlines: str = "//h1"
+        self.__header_menu_link_more: str = "//span[contains(text(),'Еще')]"
 
 
-
+#//span[contains(text(),'Еще')]
 #//ul[@class='b-header-b-menu-e-list'] /li
 #//div[@class='search-error bestsellers'] /h1
     #//div[@class='product-author']/a/span
@@ -125,11 +127,6 @@ class HomePage(SeleniumBase):
         """Список - выпадающее меню кнопки мой лабиринт"""
         return self.are_visible('css', self.__dropdown_menu_my_maze, 'выпадающее меню кнопки мой лабиринт')
 
-    def place_the_cursor(self) -> WebElement:
-        """Метод класса - выбор выпадающего меню кнопки мой лобиринт"""
-        element = self.get_nav_link_my_maze()
-        return ActionChains(self.driver).click_and_hold(element).perform()
-
     def get_maze_search(self) -> WebElement:
         """Поле ввода поиск по лабиринту"""
         return self.is_visible('xpath', self.__maze_search, 'Поле ввода Поиск по Лабиринту')
@@ -187,7 +184,7 @@ class HomePage(SeleniumBase):
         self.get_search_button().click()
 
     def get_book_string(self, lst_webelement: List[WebElement], search_variable: str) -> list[Any]:
-        """Метод класса - создает список, преобразует в строку и находит элемент по шаблону"""
+        """Поле поиска - создает список, преобразует в строку и находит элемент по шаблону"""
         lst_book = self.get_adding_element_to_list(lst_webelement)  # создает список
         check_lst_book = Utils.get_join_string(lst_book)  # преобразует в строку
         return re.findall(search_variable, check_lst_book)  # находит элемент
@@ -195,3 +192,11 @@ class HomePage(SeleniumBase):
     def get_header_menu_list(self) -> List[WebElement]:
         """"""
         return self.are_visible('xpath', self.__header_menu_list, 'header меню список')
+
+    def get_header_menu_headlines(self) -> WebElement:
+        """"""
+        return self.is_visible('xpath', self.__header_menu_headlines, 'заголовок')
+
+    def get_header_menu_link_more(self):
+        """"""
+        return self.are_visible('xpath', self.__header_menu_link_more, 'ссылка ЕЩЕ')
