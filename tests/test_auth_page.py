@@ -2,6 +2,7 @@ import re
 import time
 
 import pytest
+from selenium.webdriver import ActionChains
 
 from base.utils import Utils
 from pom.home_page import HomePage
@@ -272,10 +273,31 @@ class TestHeaderMenu:
         """"""
         header_menu = HomePage(self.driver)
 
-        header_menu.place_the_cursor(header_menu.get_header_menu_link_more()).click()
+        header_menu.place_the_cursor(header_menu.get_header_menu_link_more())
+
+        for element in range(4):
+            header_menu.get_dropdown_header_menu_link_more()[element].click()
 
 
 
+
+
+        # header_menu.place_the_cursor(header_menu.get_header_menu_link_more())
+        # for element in range(len(header_menu.get_dropdown_header_menu_link_more())):
+        #     header_menu.get_dropdown_header_menu_link_more()[element].click()
+
+
+
+        # header_personal = HomePage(self.driver)
+        # header_personal.get_refresh()
+        # header_personal.place_the_cursor(header_personal.get_nav_link_my_maze())
+        #
+        # for element in range(len(header_personal.get_dropdown_menu_my_maze_link())):
+        #     header_personal.get_dropdown_menu_my_maze_link()[element].click()
+        #     header_personal.screenshot(
+        #         f'tests/screenshot/3_home_page_header_personal_button_my_maze/'
+        #         f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
+        #     header_personal.place_the_cursor(header_personal.get_nav_link_my_maze())
 
 
 

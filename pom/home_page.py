@@ -44,8 +44,10 @@ class HomePage(SeleniumBase):
         self.__header_menu_list: str = "//ul[@class='b-header-b-menu-e-list']/li[position()<6]"
         self.__header_menu_headlines: str = "//h1"
         self.__header_menu_link_more: str = "//span[contains(text(),'Еще')]"
+        self.__dropdown_header_menu_link_more: str = "//div[contains(@class, 'b-toggle-container b-toggle-container-dots')] /ul/li[position() > 4]"
 
 
+#//div[@class='b-toggle-container b-toggle-container-dots']/ul/li[position()>4]
 #//span[contains(text(),'Еще')]
 #//ul[@class='b-header-b-menu-e-list'] /li
 #//div[@class='search-error bestsellers'] /h1
@@ -197,6 +199,10 @@ class HomePage(SeleniumBase):
         """"""
         return self.is_visible('xpath', self.__header_menu_headlines, 'заголовок')
 
-    def get_header_menu_link_more(self):
+    def get_header_menu_link_more(self) -> WebElement:
         """"""
-        return self.are_visible('xpath', self.__header_menu_link_more, 'ссылка ЕЩЕ')
+        return self.is_visible('xpath', self.__header_menu_link_more, 'ссылка ЕЩЕ')
+
+    def get_dropdown_header_menu_link_more(self) -> List[WebElement]:
+        """"""
+        return self.are_visible('xpath', self.__dropdown_header_menu_link_more, 'выпадающее меню ссылки ЕЩЕ')
