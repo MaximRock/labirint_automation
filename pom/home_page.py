@@ -1,8 +1,6 @@
 import time
 import re
 
-from selenium.webdriver import ActionChains
-
 from base.seleniumbase import SeleniumBase
 from selenium.webdriver.remote.webelement import WebElement
 from typing import List, Any
@@ -29,7 +27,8 @@ class HomePage(SeleniumBase):
         self.__auth_social_elements: str = "//ul[@class='new-auth__auth-social-list']/li"
         self.__button_sig_in: str = 'input[id=g-recap-0-btn]'
         self.__nav_link_my_maze: str = 'div>ul>li>a[class*=js-b-autofade-wrap]'
-        self.__header_personal_elements: str = "//ul[contains(@class, 'b-header-b-personal-e-list ul-justify')]/li[position() > 2]"
+        self.__header_personal_elements: str = "//ul[contains(@class, 'b-header-b-personal-e-list ul-justify')]" \
+                                               "/li[position() > 2]"
         self.__dropdown_menu_my_maze: str = 'ul[class=user-top-menu]>li'
         self.__maze_search: str = '//input[@placeholder="Поиск по Лабиринту"]'
         self.__search_button: str = '//span[starts-with(text(),"Искать")]'
@@ -41,18 +40,29 @@ class HomePage(SeleniumBase):
         self.__name_of_the_book: str = "//a[@class='product-title-link']/span"
         self.__author_book: str = "//div[@class='product-author']/a/span"
         self.__search_error_book: str = "//div[@class='search-error bestsellers']/h1"
-        self.__header_menu_list: str = "//ul[@class='b-header-b-menu-e-list']/li[position()<6]"
+        self.__header_menu_list: str = "//ul[@class='b-header-b-menu-e-list']/li[position()<=5 or position()=11]"
         self.__header_menu_headlines: str = "//h1"
         self.__header_menu_link_more: str = "//span[contains(text(),'Еще')]"
-        self.__dropdown_header_menu_link_more: str = "//div[contains(@class, 'b-toggle-container b-toggle-container-dots')] /ul/li[position() > 4]"
+        self.__dropdown_header_menu_link_cd: str = "//div[@class='b-toggle-container b-toggle-container-dots']" \
+                                                   "/ul[@class='b-menu-second-container']//child::li[5]"
+        self.__dropdown_header_menu_link_souvenir: str = "//div[@class='b-toggle-container b-toggle-container-dots']" \
+                                                         "/ul[@class='b-menu-second-container']//child::li[6]"
+        self.__dropdown_header_menu_link_journals: str = "//div[@class='b-toggle-container b-toggle-container-dots']" \
+                                                         "/ul[@class='b-menu-second-container']//child::li[7]"
+        self.__dropdown_header_menu_link_household: str = "//div[@class='b-toggle-container b-toggle-container-dots']" \
+                                                          "/ul[@class='b-menu-second-container']//child::li[8]"
+        self.__header_menu_region: str = "//li[@class ='b-header-b-menu-e-list-item']" \
+                                         "//span[@class='region-location-icon-txt ']"
+        self.__dropdown_delivery_region: str = "//div[contains(text(),'Укажите регион')]"
 
-
-#//div[@class='b-toggle-container b-toggle-container-dots']/ul/li[position()>4]
-#//span[contains(text(),'Еще')]
-#//ul[@class='b-header-b-menu-e-list'] /li
-#//div[@class='search-error bestsellers'] /h1
-    #//div[@class='product-author']/a/span
-    #//a[@class='product-title-link']/span
+    # //li[@class ='b-header-b-menu-e-list-item']//span[@class='region-location-icon-txt ']
+    # //div[contains(text(),'Укажите регион, чтобы мы точнее рассчитали условия доставки')]
+    # //div[@class='b-toggle-container b-toggle-container-dots']/ul/li[position()>4] souvenir
+    # //span[contains(text(),'Еще')]
+    # //ul[@class='b-header-b-menu-e-list'] /li
+    # //div[@class='search-error bestsellers'] /h1
+    # //div[@class='product-author']/a/span
+    # //a[@class='product-title-link']/span
     # //a[@title='Пушкин Александр Сергеевич']/span[contains(text(),'Пушкин Александр Сергеевич')]
     # //a[@class='product-title-link']/span[starts-with(text(),'Капитанская дочка')]
     # //span[starts-with(text(),'Капитанская дочка')]
@@ -192,17 +202,69 @@ class HomePage(SeleniumBase):
         return re.findall(search_variable, check_lst_book)  # находит элемент
 
     def get_header_menu_list(self) -> List[WebElement]:
-        """"""
+        """
+        Header menu - локатор,
+        :return: список из Книги, Главное 2022, Школа, Игрушки, Канцтовары, Клуб
+        """
         return self.are_visible('xpath', self.__header_menu_list, 'header меню список')
 
     def get_header_menu_headlines(self) -> WebElement:
-        """"""
+        """
+        Header menu - локатор,
+        :return: заголовок h1.
+        """
         return self.is_visible('xpath', self.__header_menu_headlines, 'заголовок')
 
     def get_header_menu_link_more(self) -> WebElement:
-        """"""
+        """
+        Header menu - локатор,
+        :return: ссылка на кнопку еще
+        """
         return self.is_visible('xpath', self.__header_menu_link_more, 'ссылка ЕЩЕ')
 
-    def get_dropdown_header_menu_link_more(self) -> List[WebElement]:
+    def get_dropdown_header_menu_link_cd(self):
+        """
+        Header menu - локатор, выпадающий список кнопки еще,
+        :return: ссылка на кнопку cd.
+        """
+        return self.is_visible('xpath', self.__dropdown_header_menu_link_cd, 'cd')
+
+    def get_dropdown_header_menu_link_souvenir(self):
         """"""
-        return self.are_visible('xpath', self.__dropdown_header_menu_link_more, 'выпадающее меню ссылки ЕЩЕ')
+        return self.is_visible('xpath', self.__dropdown_header_menu_link_souvenir, 'сувениры')
+
+    def get_dropdown_header_menu_link_journals(self):
+        """
+        Header menu - локатор, выпадающий список кнопки еще,
+        :return: ссылка на кнопку журналы.
+        """
+        return self.is_visible('xpath', self.__dropdown_header_menu_link_journals, 'журналы')
+
+    def get_dropdown_header_menu_link_household(self):
+        """
+        Header menu - локатор, выпадающий список кнопки еще,
+        :return: ссылка на кнопку товары для дома.
+        """
+        return self.is_visible('xpath', self.__dropdown_header_menu_link_household, 'товары для дома')
+
+    def get_lst(self) -> list[WebElement]:
+        """
+        Header menu - список локаторов: cd, сувениры, журналы, товары для дома.
+        :return: список локаторов.
+        """
+        return [self.get_dropdown_header_menu_link_cd(), self.get_dropdown_header_menu_link_souvenir(),
+                self.get_dropdown_header_menu_link_journals(), self.get_dropdown_header_menu_link_household()]
+
+    def get_header_menu_region(self):
+        """
+        Header menu - локатор, кнопки региона доставки
+        :return: header_menu регион доставки
+        """
+        return self.is_visible('xpath', self.__header_menu_region, 'header_menu регион доставки')
+
+    def get_dropdown_delivery_region(self):
+        """
+        Header menu - локатор,
+        :return: выпадающее меню регион доставки
+        """
+        return self.is_visible('xpath', self.__dropdown_delivery_region, 'регион доставки')

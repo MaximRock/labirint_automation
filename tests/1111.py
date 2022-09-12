@@ -146,6 +146,20 @@ import pytest
         # for element in w:
         #     assert element == book_titles_edgar_raven
 
+# lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_russian)
+# if len(lst_book) > 0:
+#     for element in lst_book:
+#         assert element == book_russian, 'в списке книг есть элементы'
+# else:
+#     assert lst_book == book_russian, 'список книг пустой'
+#
+# lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_russian)
+# if len(lst_book) > 0:
+#     for element in lst_author:
+#         assert element == book_author_russian, 'в списке книг есть элементы'
+# else:
+#     assert lst_book == book_author_russian, 'список книг пустой'
+
 lst = ['Капитанская дочка',
        'Капитанская дочка. Подробный иллюстрированный комментарий к роману А.С. Пушкина "Капитанская дочка"',
        'Капитанская дочка. Сборник', 'Капитанская дочка', 'Евгений Онегин. Повести Белкина. Капитанская дочка',

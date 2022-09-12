@@ -69,7 +69,7 @@ class SeleniumBase:
         return self.driver.current_url
 
     def place_the_cursor(self, element: WebElement) -> WebElement:
-        """Метод класса - выбор выпадающего меню кнопки мой лобиринт"""
+        """Метод класса - выбор выпадающего меню"""
         return ActionChains(self.driver).click_and_hold(element).perform()
 
     def get_adding_element_to_list(self, elements: List[WebElement]) -> list[str]:

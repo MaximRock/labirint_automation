@@ -11,7 +11,7 @@ from settings import my_code, my_login, my_cabinet, list_my_discount_code_negati
     list_header_personal_button_my_maze_dropdown_menu, book_russian, list_of_values_in_the_search_field_rassian, \
     book_author_russian, list_of_values_in_the_search_field_english, book_author_english, book_titles_english, \
     book_titles_edgar_raven, book_author_edgar_allan_poe, list_of_values_in_the_search_field_edgar_allan_poe_raven, \
-    list_of_values_in_the_search_field_empty_spaces
+    list_of_values_in_the_search_field_empty_spaces, book_author_russian1, book_russian1, book_author_english1
 
 
 @pytest.mark.usefixtures('setup')
@@ -157,18 +157,16 @@ class TestSearch:
         search_field.get_search_input_field(book_russian)
 
         lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_russian)
-        if len(lst_book) > 0:
-            for element in lst_book:
-                assert element == book_russian, 'в списке книг есть элементы'
-        else:
-            assert lst_book == book_russian, 'список книг пустой'
-
         lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_russian)
         if len(lst_book) > 0:
-            for element in lst_author:
-                assert element == book_author_russian, 'в списке книг есть элементы'
+            for book in lst_book:
+                for author in lst_author:
+                    assert author == book_author_russian, 'в списке авторов нет элементов'
+                assert book == book_russian, 'в списке книг нет элементов'
         else:
-            assert lst_book == book_author_russian, 'список книг пустой'
+            print('список книг пустой')
+        #     assert lst_book == book_russian, 'список книг пустой'
+        #     assert lst_author == book_author_russian, 'список ваторов пустой'
 
     @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field_rassian)
     def test_book_russian_search(self, search_input_captain_daughter):
@@ -178,18 +176,16 @@ class TestSearch:
         search_field.get_search_input_field(search_input_captain_daughter)
 
         lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_russian)
-        if len(lst_book) > 0:
-            for element in lst_book:
-                assert element == book_russian, 'в списке книг есть элементы'
-        else:
-            assert lst_book == book_russian, 'список книг пустой'
-
         lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_russian)
         if len(lst_book) > 0:
-            for element in lst_author:
-                assert element == book_author_russian, 'в списке книг есть элементы'
+            for book in lst_book:
+                for author in lst_author:
+                    assert author == book_author_russian, 'в списке авторов нет элементов'
+                assert book == book_russian, 'в списке книг нет элементов'
         else:
-            assert lst_book == book_author_russian, 'список книг пустой'
+            print('список книг пустой')
+        #     assert lst_book == book_russian, 'список книг пустой'
+        #     assert lst_book == book_author_russian, 'список ваторов пустой'
 
         print(f'вводимое значение {search_input_captain_daughter}')
 
@@ -201,20 +197,32 @@ class TestSearch:
         search_field.get_search_input_field(search_input_programming_on_python)
 
         lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_english)
-        if len(lst_book) > 0:
-            for element in lst_book:
-                assert element == book_titles_english, 'в списке книг есть элементы'
-        else:
-            assert lst_book == book_titles_english, 'список книг пустой'
-
         lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_english)
+
         if len(lst_book) > 0:
-            for element in lst_author:
-                assert element == book_author_english, 'в списке книг есть элементы'
+            for book in lst_book:
+                for author in lst_author:
+                    assert author == book_author_english, 'в списке авторов нет элементов'
+                assert book == book_titles_english, 'в списке книг нет элементов'
         else:
-            assert lst_book == book_author_english, 'список книг пустой'
+            print('список книг пустой')
+        #     assert lst_book == book_author_english1, 'список книг пустой'
 
         print(f'вводимое значение {search_input_programming_on_python}')
+
+        # lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_english)
+        # if len(lst_book) > 0:
+        #     for element in lst_book:
+        #         assert element == book_titles_english, 'в списке книг есть элементы'
+        # else:
+        #     assert lst_book == book_titles_english, 'список книг пустой'
+        #
+        # lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_english)
+        # if len(lst_book) > 0:
+        #     for element in lst_author:
+        #         assert element == book_author_english, 'в списке книг есть элементы'
+        # else:
+        #     assert lst_book == book_author_english, 'список книг пустой'
 
     @pytest.mark.parametrize("search_input_edgar_allan_poe_raven",
                              list_of_values_in_the_search_field_edgar_allan_poe_raven)
@@ -226,20 +234,32 @@ class TestSearch:
         search_field.get_search_input_field(search_input_edgar_allan_poe_raven)
 
         lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_edgar_raven)
-        if len(lst_book) > 0:
-            for element in lst_book:
-                assert element == book_titles_edgar_raven, 'в списке книг есть элементы'
-        else:
-            assert lst_book == book_titles_edgar_raven, 'список книг пустой'
-
         lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_edgar_allan_poe)
-        if len(lst_author) > 0:
-            for element in lst_book:
-                assert element == book_titles_edgar_raven, 'в списке авторов есть элементы'
-        else:
-            assert lst_author == book_titles_edgar_raven, 'список авторов пустой'
+        if len(lst_book) > 0:
+            for book in lst_book:
+                for author in lst_author:
+                    assert author == book_titles_edgar_raven, 'в списке авторов нет элементов'
+                assert book == book_titles_edgar_raven, 'в списке книг нет элементов'
+            else:
+                print('список книг пустой')
 
         print(f'вводимое значение {search_input_edgar_allan_poe_raven}')
+
+        # lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_edgar_raven)
+        # if len(lst_book) > 0:
+        #     for element in lst_book:
+        #         assert element == book_titles_edgar_raven, 'в списке книг есть элементы'
+        # else:
+        #     assert lst_book == book_titles_edgar_raven, 'список книг пустой'
+        #
+        # lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_edgar_allan_poe)
+        # if len(lst_author) > 0:
+        #     for element in lst_book:
+        #         assert element == book_titles_edgar_raven, 'в списке авторов есть элементы'
+        # else:
+        #     assert lst_author == book_titles_edgar_raven, 'список авторов пустой'
+
+
 
     @pytest.mark.parametrize("search_input_empty_spaces",
                              list_of_values_in_the_search_field_empty_spaces)
@@ -258,46 +278,51 @@ class TestSearch:
 
 @pytest.mark.usefixtures('setup')
 class TestHeaderMenu:
-    """"""
+    """Тест Header Menu"""
     def test_header_menu_click(self):
-        """"""
+        """
+        Тест - проверки header menu Книги, Главное 2022, Школа, Игрушки, Канцтовары, Клуб.
+        :return: текст заголовка на странице соответствует странице из меню
+        """
         header_menu = HomePage(self.driver)
-        list_header_menu_text = []
+        list_header_menu_text = Utils.get_list_creation()
+
         for element in range(len(header_menu.get_header_menu_list())):
             header_menu.get_header_menu_list()[element].click()
             list_header_menu_text.append(header_menu.get_header_menu_headlines().text)
             assert header_menu.get_header_menu_headlines().text == list_header_menu_text[element]
         print(list_header_menu_text)
 
+
     def test_header_menu_link_more(self):
-        """"""
+        """
+        Тест - проверки header menu выпадающий список кнопки еще, cd, сувениры, журналы, товары для дома.
+        :return: текст заголовка на странице соответствует странице из меню
+        """
         header_menu = HomePage(self.driver)
+        list_header_menu_text = Utils.get_list_creation()
 
         header_menu.place_the_cursor(header_menu.get_header_menu_link_more())
 
-        for element in range(4):
-            header_menu.get_dropdown_header_menu_link_more()[element].click()
+        for element in range(len(header_menu.get_lst())):
+            header_menu.place_the_cursor(header_menu.get_header_menu_link_more())
+            header_menu.get_lst()[element].click()
+            list_header_menu_text.append(header_menu.get_header_menu_headlines().text)
+            assert header_menu.get_header_menu_headlines().text == list_header_menu_text[element]
+        print(list_header_menu_text)
+
+    def test_header_menu_link_delivery_region(self):
+        """
+        Тест - проверки ссылки опрделения локации.
+        :return: проверяем видимость текста в элементе 'Укажите регион, чтобы мы точнее рассчитали условия доставки'
+        """
+        header_menu = HomePage(self.driver)
+
+        header_menu.get_header_menu_region().click()
+        header_menu.sleep()
+        assert header_menu.get_dropdown_delivery_region().is_displayed()
 
 
-
-
-
-        # header_menu.place_the_cursor(header_menu.get_header_menu_link_more())
-        # for element in range(len(header_menu.get_dropdown_header_menu_link_more())):
-        #     header_menu.get_dropdown_header_menu_link_more()[element].click()
-
-
-
-        # header_personal = HomePage(self.driver)
-        # header_personal.get_refresh()
-        # header_personal.place_the_cursor(header_personal.get_nav_link_my_maze())
-        #
-        # for element in range(len(header_personal.get_dropdown_menu_my_maze_link())):
-        #     header_personal.get_dropdown_menu_my_maze_link()[element].click()
-        #     header_personal.screenshot(
-        #         f'tests/screenshot/3_home_page_header_personal_button_my_maze/'
-        #         f'{list_header_personal_button_my_maze_dropdown_menu[element]}.png')
-        #     header_personal.place_the_cursor(header_personal.get_nav_link_my_maze())
 
 
 
