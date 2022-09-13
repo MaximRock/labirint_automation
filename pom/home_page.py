@@ -54,23 +54,18 @@ class HomePage(SeleniumBase):
         self.__header_menu_region: str = "//li[@class ='b-header-b-menu-e-list-item']" \
                                          "//span[@class='region-location-icon-txt ']"
         self.__dropdown_delivery_region: str = "//div[contains(text(),'Укажите регион')]"
+        self.__deferred_product: str = '//a[contains(@title,"Добавить в отложенные и отслеживать появление в продаже")]'
+        self.__set_aside_book: str = "//div[@class='product-cover short-title']/a[@class='cover']/span[@class='product-title']"
+        self.__postponed: str = "//span[contains(text(),'Отложено')]"
 
-    # //li[@class ='b-header-b-menu-e-list-item']//span[@class='region-location-icon-txt ']
-    # //div[contains(text(),'Укажите регион, чтобы мы точнее рассчитали условия доставки')]
-    # //div[@class='b-toggle-container b-toggle-container-dots']/ul/li[position()>4] souvenir
-    # //span[contains(text(),'Еще')]
-    # //ul[@class='b-header-b-menu-e-list'] /li
-    # //div[@class='search-error bestsellers'] /h1
-    # //div[@class='product-author']/a/span
-    # //a[@class='product-title-link']/span
-    # //a[@title='Пушкин Александр Сергеевич']/span[contains(text(),'Пушкин Александр Сергеевич')]
-    # //a[@class='product-title-link']/span[starts-with(text(),'Капитанская дочка')]
-    # //span[starts-with(text(),'Капитанская дочка')]
-    # //span[starts-with(text(),'На складе')]
-    # //span[starts-with(text(),'В корзине')]
-    # //span[starts-with(text(),"в корзину")].
-    # //div[contains(@class, 'genres-carousel__container  products-row' )]/div[position()=1]
 
+
+
+#//span[contains(text(),'Отложено')]
+#//div[@class='product need-watch product_labeled product-cart watched']//span[contains(text(),'Капитанская дочка')]
+#//a[contains(@title,"Добавить в отложенные и отслеживать появление в продаже")]
+
+# ===================== Класс TestAuthorization =======================================================================
     def get_nav_link_my_maze(self) -> WebElement:
         """Панель личного кабинета ссылка - мой лобиринт"""
         return self.is_visible('css', self.__nav_link_my_maze, 'мой лабиринт')
@@ -131,6 +126,9 @@ class HomePage(SeleniumBase):
         self.get_nav_link_my_maze().click()
         self.get_other_login_methods().click()
 
+
+# ================================= Класс TestHeaderMenuPersonal ======================================================
+
     def get_header_personal_elements(self) -> List[WebElement]:
         """Список - меню личного кабинета сообщения, мой лабиринт, отложено, корзина"""
         return self.are_visible('xpath', self.__header_personal_elements, 'сообщения, мой лабиринт, отложено, корзина')
@@ -139,14 +137,8 @@ class HomePage(SeleniumBase):
         """Список - выпадающее меню кнопки мой лабиринт"""
         return self.are_visible('css', self.__dropdown_menu_my_maze, 'выпадающее меню кнопки мой лабиринт')
 
-    def get_maze_search(self) -> WebElement:
-        """Поле ввода поиск по лабиринту"""
-        return self.is_visible('xpath', self.__maze_search, 'Поле ввода Поиск по Лабиринту')
 
-    def get_search_button(self) -> WebElement:
-        """Кнопка искать в поле поиска по лабиринту"""
-        return self.is_visible('xpath', self.__search_button, 'кнопка искать в поле поиска по лабиринту')
-
+# ============================= Класс TestAddingProduct ==============================================================
     def get_book(self) -> WebElement:
         """Добавление товара в карзину - первая книга результат поиска"""
         return self.is_visible('xpath', self.__book, 'первая книга результат поиска')
@@ -179,6 +171,49 @@ class HomePage(SeleniumBase):
         self.get_add_to_cart().click()
         self.get_basket().click()
 
+# =========================================== Класс TestDeferredProduct ==============================================
+
+    def get_deferred_product(self):
+        """
+        Отложеные - выбор книги, ссылка добавить в отложеные.
+        :return: ожидаем появления ссылки добавить в отложеные.
+        """
+        return self.is_visible('xpath', self.__deferred_product, 'добавить в отложенные')
+
+    def get_set_aside_book(self) -> list[WebElement]:
+        """
+        Отложеные - название книги на странице отложеные.
+        :return: ожидаем появления ссылки название книги
+        """
+        return self.are_visible('xpath', self.__set_aside_book, 'название книги в отложеных')
+
+    def get_postponed(self):
+        """
+        Отложеные - ссылка отложено в HeaderMenuPersonal
+        :return:ожидаем появления ссылки отложено
+        """
+        return self.is_visible('xpath', self.__postponed, 'ссылка отложено в меню пользователя')
+
+    def get_click_deferred_product_and_postponed(self) -> None:
+        """
+        Отложеные - нажать добавить в отложеные на странице самой книги,
+                    нажать ссылку отложеные в HeaderMenuPersonal
+        :return: None
+        """
+        self.get_deferred_product().click()
+        self.get_postponed().click()
+
+
+# ===================================== Класс TestSearch ============================================================
+
+    def get_maze_search(self) -> WebElement:
+        """Поле ввода поиск по лабиринту"""
+        return self.is_visible('xpath', self.__maze_search, 'Поле ввода Поиск по Лабиринту')
+
+    def get_search_button(self) -> WebElement:
+        """Кнопка искать в поле поиска по лабиринту"""
+        return self.is_visible('xpath', self.__search_button, 'кнопка искать в поле поиска по лабиринту')
+
     def get_name_of_the_book(self) -> List[WebElement]:
         """Строка поиска - список книг результат поиска"""
         return self.are_visible('xpath', self.__name_of_the_book, 'список книг результат поиска')
@@ -188,6 +223,10 @@ class HomePage(SeleniumBase):
         return self.are_visible('xpath', self.__author_book, 'список авторов')
 
     def get_search_error_book(self) -> WebElement:
+        """
+        Строка поиска - заголовок: Мы ничего не нашли по вашему запросу! Что делать?
+        :return: Ожидаем появления заголовка.
+        """
         return self.is_visible('xpath', self.__search_error_book, 'неудачный поиск книги')
 
     def get_search_input_field(self, search_element: str) -> None:
@@ -200,6 +239,8 @@ class HomePage(SeleniumBase):
         lst_book = self.get_adding_element_to_list(lst_webelement)  # создает список
         check_lst_book = Utils.get_join_string(lst_book)  # преобразует в строку
         return re.findall(search_variable, check_lst_book)  # находит элемент
+
+# ==================================== Класс TestHeaderMenu ==========================================================
 
     def get_header_menu_list(self) -> List[WebElement]:
         """
@@ -268,3 +309,5 @@ class HomePage(SeleniumBase):
         :return: выпадающее меню регион доставки
         """
         return self.is_visible('xpath', self.__dropdown_delivery_region, 'регион доставки')
+
+

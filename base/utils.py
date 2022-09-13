@@ -12,7 +12,13 @@ class Utils:
         return ", ".join(lst_string)
 
     @staticmethod
-    def get_list_creation() -> list:
-        lst = list()
+    def get_list_creation(lst=None) -> list:
+        """
+
+        :param lst:
+        :return:
+        """
+        if lst is None:
+            lst = []
         return lst
 

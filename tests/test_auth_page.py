@@ -146,6 +146,46 @@ class TestAddingProduct:
 
 
 @pytest.mark.usefixtures('setup')
+@pytest.mark.usefixtures('auth_my_maze')
+class TestDeferredProduct:
+    """Тест проверки добавления книги в отложеные"""
+
+    def test_addition_of_the_first_book(self):
+        """
+        Тест добавление книги в отложеные, проверки книги на складе.
+        :return: проверка название отложенной книги == название искомой книги
+        """
+        deferred_product = HomePage(self.driver)
+        deferred_product.get_maze_search().send_keys(book_russian)
+        deferred_product.get_search_click_and_click_book()
+
+        if deferred_product.get_in_stock().is_displayed():
+            deferred_product.get_click_deferred_product_and_postponed()
+            assert deferred_product.get_set_aside_book().text == book_russian
+        else:
+            print('Товар отсутствует на складе')
+
+    def test_adding_a_second_book(self):
+        """
+
+        :return:
+        """
+        deferred_product = HomePage(self.driver)
+        deferred_product.get_maze_search().send_keys(f'{book_titles_english} {book_author_english}')
+        deferred_product.get_search_click_and_click_book()
+
+        if deferred_product.get_in_stock().is_displayed():
+            deferred_product.get_click_deferred_product_and_postponed()
+            assert deferred_product.get_set_aside_book().text == 'Программирование на Python. Первые шаги'
+        else:
+            print('Товар отсутствует на складе')
+
+
+
+
+
+@pytest.mark.usefixtures('setup')
+# @pytest.mark.usefixtures('auth_my_maze')
 class TestSearch:
     """Тест поля "Поиска" на главной странице"""
 
@@ -259,8 +299,6 @@ class TestSearch:
         # else:
         #     assert lst_author == book_titles_edgar_raven, 'список авторов пустой'
 
-
-
     @pytest.mark.parametrize("search_input_empty_spaces",
                              list_of_values_in_the_search_field_empty_spaces)
     def test_field_empty_spaces(self, search_input_empty_spaces):
@@ -276,9 +314,11 @@ class TestSearch:
 
         print(f'вводимое значение {search_input_empty_spaces}')
 
+
 @pytest.mark.usefixtures('setup')
 class TestHeaderMenu:
     """Тест Header Menu"""
+
     def test_header_menu_click(self):
         """
         Тест - проверки header menu Книги, Главное 2022, Школа, Игрушки, Канцтовары, Клуб.
@@ -292,7 +332,6 @@ class TestHeaderMenu:
             list_header_menu_text.append(header_menu.get_header_menu_headlines().text)
             assert header_menu.get_header_menu_headlines().text == list_header_menu_text[element]
         print(list_header_menu_text)
-
 
     def test_header_menu_link_more(self):
         """
@@ -321,8 +360,3 @@ class TestHeaderMenu:
         header_menu.get_header_menu_region().click()
         header_menu.sleep()
         assert header_menu.get_dropdown_delivery_region().is_displayed()
-
-
-
-
-
