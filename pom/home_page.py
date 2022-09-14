@@ -21,6 +21,7 @@ class HomePage(SeleniumBase):
         self.__nav_link_sig_in: str = '[value="Войти"]'
         self.__code: str = 'input[class*=formvalidate-error]'
         self.__check_and_login: str = 'form[id="auth-email-sent"]>[type="submit"]'
+        self.__automatic_closing: str = "//input[@value='Автоматически закроется через 3 сек.']"
         self.__personal_cabinet: str = "//span[starts-with(text(),'Личный кабинет')]"
         self.__sleep: float = 10
         self.__other_login_methods: str = '//a[starts-with(text(),"Другие способы входа")]'
@@ -57,10 +58,22 @@ class HomePage(SeleniumBase):
         self.__deferred_product: str = '//a[contains(@title,"Добавить в отложенные и отслеживать появление в продаже")]'
         self.__set_aside_book: str = "//div[@class='product-cover short-title']/a[@class='cover']/span[@class='product-title']"
         self.__postponed: str = "//span[contains(text(),'Отложено')]"
+        self.LST_OF_POSTPONED_BOOKS: list = ['Программирование на Python. Первые шаги', 'Капитанская дочка']
+        self.__clear_button: str = "//a[contains(text(),'Очистить')]"
+        self.__message_deleted_in_deferred: str = "//div[@id='messages-text']/p"
+        self.__book_in_a_basket: str = "//div[@class='product-cover']/a[@class='cover']/span[@class='product-title']"
+        self.__button_clear_basket: str = "//a[contains(text(), 'Очистить корзину')]"
+        self.__your_basket_is_empty: str = "//span[contains(text(), 'Ваша корзина пуста. Почему?')]"
 
 
 
-
+#//span[contains(text(), 'Ваша корзина пуста. Почему?')]
+#//a[contains(text(), 'Очистить корзину')]
+#"//div[@class='product-cover']/a[@class='cover']/span[@class='product-title']"
+#//input[@value='Автоматически закроется через 3 сек.']
+#//div[@id='messages-text']/p    Выбранные товары удалены!
+#//a[contains(text(),'Очистить')]
+#//div[@class='product-cover short-title']/a[@class='cover']/span[@class='product-title']
 #//span[contains(text(),'Отложено')]
 #//div[@class='product need-watch product_labeled product-cart watched']//span[contains(text(),'Капитанская дочка')]
 #//a[contains(@title,"Добавить в отложенные и отслеживать появление в продаже")]
@@ -85,6 +98,10 @@ class HomePage(SeleniumBase):
     def get_check_and_login(self) -> WebElement:
         """Регистрация - конопка проверить и войти"""
         return self.is_visible('css', self.__check_and_login, 'кнопка проверить и войти')
+
+    def get_automatic_closing(self):
+        """"""
+        return self.is_visible('xpath', self.__automatic_closing, 'кнопка автоматического закрытия')
 
     def personal_cabinet(self) -> str:
         """Заголовок - личный кабинет"""
@@ -159,6 +176,18 @@ class HomePage(SeleniumBase):
         """Добавление товара в карзину - проверка наличия товара на складе"""
         return self.is_visible('xpath', self.__in_stock, 'проверка наличия товара на складе')
 
+    def get_book_in_a_basket(self) -> list[WebElement]:
+        """"""
+        return self.are_visible('xpath', self.__book_in_a_basket, 'список товара в корзине')
+
+    def get_button_clear_basket(self):
+        """"""
+        return self.is_visible('xpath', self.__button_clear_basket, 'кнопка очистить корзину')
+
+    def get_your_basket_is_empty(self):
+        """"""
+        return self.is_visible('xpath', self.__your_basket_is_empty, 'ваша корзина пуста')
+
     def get_search_click_and_click_book(self) -> None:
         """Добавление товара в карзину - метод класса,
         нажать на кнопку искать и на книгу"""
@@ -182,7 +211,7 @@ class HomePage(SeleniumBase):
 
     def get_set_aside_book(self) -> list[WebElement]:
         """
-        Отложеные - название книги на странице отложеные.
+        Отложеные - название книг на странице отложеные.
         :return: ожидаем появления ссылки название книги
         """
         return self.are_visible('xpath', self.__set_aside_book, 'название книги в отложеных')
@@ -193,6 +222,17 @@ class HomePage(SeleniumBase):
         :return:ожидаем появления ссылки отложено
         """
         return self.is_visible('xpath', self.__postponed, 'ссылка отложено в меню пользователя')
+
+    def get_clear_button(self):
+        """"""
+        return self.is_visible('xpath', self.__clear_button, 'кнопка очистить messages-text')
+
+    def get_message_deleted_in_deferred(self):
+        """
+
+        :return:
+        """
+        return self.is_visible('xpath', self.__message_deleted_in_deferred, 'сообщение удаленых книг из отложеного')
 
     def get_click_deferred_product_and_postponed(self) -> None:
         """

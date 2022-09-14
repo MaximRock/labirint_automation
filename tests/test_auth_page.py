@@ -11,7 +11,7 @@ from settings import my_code, my_login, my_cabinet, list_my_discount_code_negati
     list_header_personal_button_my_maze_dropdown_menu, book_russian, list_of_values_in_the_search_field_rassian, \
     book_author_russian, list_of_values_in_the_search_field_english, book_author_english, book_titles_english, \
     book_titles_edgar_raven, book_author_edgar_allan_poe, list_of_values_in_the_search_field_edgar_allan_poe_raven, \
-    list_of_values_in_the_search_field_empty_spaces, book_author_russian1, book_russian1, book_author_english1
+    list_of_values_in_the_search_field_empty_spaces
 
 
 @pytest.mark.usefixtures('setup')
@@ -26,7 +26,8 @@ class TestAuthorization:
         auth_page = HomePage(self.driver)
         auth_page.get_discount_phone_mail(my_login)
         auth_page.get_my_discount_code(my_code)
-        auth_page.sleep()
+        auth_page.get_automatic_closing().click()
+        # auth_page.sleep()
         auth_page.get_nav_link_my_maze().click()
         auth_page.screenshot('tests/screenshot/1_authorization/my_cabinet.png')
 
@@ -109,7 +110,7 @@ class TestHeaderMenuPersonal:
                 f'tests/screenshot/2_home_page_header_personal/{list_header_personal[element]}.png')
 
     def test_dropdown_menu_my_maze_click(self):
-        """тест проверки выпадающего меню мой лабиринт: заказы, вы смотрели, отложенные, балонс, настройки, выход
+        """тест проверки выпадающего меню мой лабиринт: заказы, вы смотрели, отложенные, баланс, настройки, выход
         проверка скринщоты в папке :
         tests/screenshot/3_home_page_header_personal_button_my_maze"""
 
@@ -128,21 +129,60 @@ class TestHeaderMenuPersonal:
 @pytest.mark.usefixtures('setup')
 @pytest.mark.usefixtures('auth_my_maze')
 class TestAddingProduct:
+    """Тест проверки добавления товара в корзину, очистки крозины"""
 
-    def test_adding_product_to_cart(self):
-        """Тест проверки добавления товара в корзину,
-        проверка: видимость заголовка 'В корзине', если товар отсутствует на склоде выводим сообщение,
-        проверяем всегда первую левую книгу"""
-
+    def test_adding_product_to_cart_first_book(self):
+        """Тест проверки добавления товара в корзину, проверка условия наличие товара на складе.
+        проверяем список товара в корзине не пустой, находимся на странице Корзина,
+        :return:сравневаем список товаров в корзине с тестовыми данными в переменой - LST_OF_POSTPONED_BOOKS.
+        """
         adding_product = HomePage(self.driver)
-
         adding_product.get_maze_search().send_keys(book_russian)
         adding_product.get_search_click_and_click_book()
+
         if adding_product.get_in_stock().is_displayed():
             adding_product.get_add_to_cart_and_basket_click()
-            assert adding_product.get_in_the_basket() == 'В корзине'
         else:
             print('Товар отсутствует на складе')
+
+        if len(adding_product.get_book_in_a_basket()) > 0 \
+                or adding_product.get_current_url() == 'https://www.labirint.ru/cart/':
+            for element in range(len(adding_product.get_book_in_a_basket())):
+                assert adding_product.get_book_in_a_basket()[element].text == adding_product.LST_OF_POSTPONED_BOOKS[1]
+
+    def test_adding_product_to_cart_second_book(self):
+        """
+        Тест проверки добавления второго товара в корзину, проверка условия наличие товара на складе.
+        проверяем список товара в корзине не пустой, находимся на странице Корзина,
+        :return:сравневаем список товаров в корзине с тестовыми данными в переменой - LST_OF_POSTPONED_BOOKS.
+        """
+        adding_product = HomePage(self.driver)
+        adding_product.get_maze_search().send_keys(f'{book_titles_english} {book_author_english}')
+        adding_product.get_search_click_and_click_book()
+
+        if adding_product.get_in_stock().is_displayed():
+            adding_product.get_add_to_cart_and_basket_click()
+        else:
+            print('Товар отсутствует на складе')
+
+        if len(adding_product.get_book_in_a_basket()) > 0 \
+                or adding_product.get_current_url() == 'https://www.labirint.ru/cart/':
+            for element in range(len(adding_product.get_book_in_a_basket())):
+                assert adding_product.get_book_in_a_basket()[element].text \
+                       == adding_product.LST_OF_POSTPONED_BOOKS[element]
+
+    def test_removing_an_item_from_the_cart(self):
+
+        """
+        Тест проверки удаления товара из корзины.
+        :return: сравниваем заголовок с текстом 'ВАША КОРЗИНА ПУСТА. ПОЧЕМУ?'.
+        """
+        adding_product = HomePage(self.driver)
+        adding_product.get_basket().click()
+
+        if adding_product.get_current_url():
+            adding_product.get_button_clear_basket().click()
+            assert adding_product.get_your_basket_is_empty().text == 'ВАША КОРЗИНА ПУСТА. ПОЧЕМУ?'
 
 
 @pytest.mark.usefixtures('setup')
@@ -152,7 +192,8 @@ class TestDeferredProduct:
 
     def test_addition_of_the_first_book(self):
         """
-        Тест добавление книги в отложеные, проверки книги на складе.
+        Тест добавление книги в отложеные, проверка книги на складе,
+        проверка в отложеных есть книга и находимся на странице отложеные.
         :return: проверка название отложенной книги == название искомой книги
         """
         deferred_product = HomePage(self.driver)
@@ -161,14 +202,20 @@ class TestDeferredProduct:
 
         if deferred_product.get_in_stock().is_displayed():
             deferred_product.get_click_deferred_product_and_postponed()
-            assert deferred_product.get_set_aside_book().text == book_russian
         else:
             print('Товар отсутствует на складе')
 
+        if len(deferred_product.get_set_aside_book()) > 0 \
+                or deferred_product.get_current_url() == 'https://www.labirint.ru/cabinet/putorder/':
+            for element in range(len(deferred_product.get_set_aside_book())):
+                assert deferred_product.get_set_aside_book()[element].text \
+                       == deferred_product.LST_OF_POSTPONED_BOOKS[1]
+
     def test_adding_a_second_book(self):
         """
-
-        :return:
+        Тест провенки добавление книги в отложеные если там уже есть книга,
+        проверка книги на складе, проверка в отложеных есть книга и находимся на странице отложеные.
+        :return: проверка название отложенной книги == название искомой книги
         """
         deferred_product = HomePage(self.driver)
         deferred_product.get_maze_search().send_keys(f'{book_titles_english} {book_author_english}')
@@ -176,16 +223,29 @@ class TestDeferredProduct:
 
         if deferred_product.get_in_stock().is_displayed():
             deferred_product.get_click_deferred_product_and_postponed()
-            assert deferred_product.get_set_aside_book().text == 'Программирование на Python. Первые шаги'
         else:
             print('Товар отсутствует на складе')
 
+        if len(deferred_product.get_set_aside_book()) > 0 \
+                or deferred_product.get_current_url() == 'https://www.labirint.ru/cabinet/putorder/':
+            for element in range(len(deferred_product.get_set_aside_book())):
+                assert deferred_product.get_set_aside_book()[element].text \
+                       == deferred_product.LST_OF_POSTPONED_BOOKS[element]
 
+    def test_remove_books_from_deferred(self):
+        """
+        Тест проверки удоления товаров из отложеного.
+        :return: сравниваем элемент с текстом.
+        """
+        deferred_product = HomePage(self.driver)
+        deferred_product.get_postponed().click()
+        deferred_product.get_clear_button().click()
+        deferred_product.alert_confirmation()
 
+        assert deferred_product.get_message_deleted_in_deferred().text == 'Выбранные товары удалены!'
 
 
 @pytest.mark.usefixtures('setup')
-# @pytest.mark.usefixtures('auth_my_maze')
 class TestSearch:
     """Тест поля "Поиска" на главной странице"""
 
@@ -206,7 +266,7 @@ class TestSearch:
         else:
             print('список книг пустой')
         #     assert lst_book == book_russian, 'список книг пустой'
-        #     assert lst_author == book_author_russian, 'список ваторов пустой'
+        #     assert lst_author == book_author_russian, 'список аторов пустой'
 
     @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field_rassian)
     def test_book_russian_search(self, search_input_captain_daughter):

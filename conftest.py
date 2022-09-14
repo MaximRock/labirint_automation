@@ -41,7 +41,8 @@ def auth_my_maze(setup):
     auth_page = HomePage(setup)
     auth_page.get_discount_phone_mail(my_code)
     auth_page.get_button_sig_in().click()
-    auth_page.sleep()
+    auth_page.get_automatic_closing().click()
+
 
 
 

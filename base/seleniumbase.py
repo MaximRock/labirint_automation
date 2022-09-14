@@ -69,10 +69,18 @@ class SeleniumBase:
         return self.driver.current_url
 
     def place_the_cursor(self, element: WebElement) -> WebElement:
-        """Метод класса - выбор выпадающего меню"""
+        """Выбор выпадающего меню"""
         return ActionChains(self.driver).click_and_hold(element).perform()
 
     def get_adding_element_to_list(self, elements: List[WebElement]) -> list[str]:
         """Создание списка текста WebElement - ов"""
         return [element.text for element in elements]
+
+    def alert_confirmation(self) -> WebElement:
+        """
+        Подтверждение оповщения на странице.
+        :return:
+        """
+        alert_obj = self.driver.switch_to.alert
+        return alert_obj.accept()
 
