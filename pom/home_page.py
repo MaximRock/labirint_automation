@@ -64,9 +64,17 @@ class HomePage(SeleniumBase):
         self.__book_in_a_basket: str = "//div[@class='product-cover']/a[@class='cover']/span[@class='product-title']"
         self.__button_clear_basket: str = "//a[contains(text(), 'Очистить корзину')]"
         self.__your_basket_is_empty: str = "//span[contains(text(), 'Ваша корзина пуста. Почему?')]"
+        self.__product_type_and_availability: str = "//div[@class='search-bl openable opened applied']" \
+                                                    "//div[@class='inputs']/div"
+        self.__button_all_filters: str = "//div[@class='navisort-line-one swiper-slide swiper-slide-active']//span[contains(text(),'ВСЕ ФИЛЬТРЫ')]"
+        self.__button_show: str = "//input[@value='Показать' and @class='show-goods__button']"
+        self.__button_reset: str = "//div[@class='search-form-reset-row']/span[contains(text(),'Сбросить')]"
 
 
 
+#//div[@class='search-form-reset-row']/span[contains(text(),'Сбросить')]
+#//div[@class='mobile-subnavigagions-block only_mobile-block']//span[contains(text(),'ВСЕ ФИЛЬТРЫ')]
+#//div[@class='search-bl openable opened applied']//div[@class='inputs']/div
 #//span[contains(text(), 'Ваша корзина пуста. Почему?')]
 #//a[contains(text(), 'Очистить корзину')]
 #"//div[@class='product-cover']/a[@class='cover']/span[@class='product-title']"
@@ -349,5 +357,29 @@ class HomePage(SeleniumBase):
         :return: выпадающее меню регион доставки
         """
         return self.is_visible('xpath', self.__dropdown_delivery_region, 'регион доставки')
+
+# ======================================= TestSearchResultFilter =====================================================
+
+    def get_product_type_and_availability(self) -> list[WebElement]:
+        """
+
+        :return:
+        """
+        return self.are_visible('xpath', self.__product_type_and_availability, 'фильтры тип товара наличие')
+
+    def get_button_all_filters(self):
+        """
+
+        :return:
+        """
+        return self.is_clickable('xpath', self.__button_all_filters, 'кнопка все фильтры')
+
+    def get_button_show(self):
+        """
+
+        :return:
+        """
+        return self.is_clickable('xpath', self.__button_show, 'кнопка показать в меню фильтрации')
+
 
 

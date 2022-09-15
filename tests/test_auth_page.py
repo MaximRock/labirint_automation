@@ -420,3 +420,40 @@ class TestHeaderMenu:
         header_menu.get_header_menu_region().click()
         header_menu.sleep()
         assert header_menu.get_dropdown_delivery_region().is_displayed()
+
+
+@pytest.mark.usefixtures('setup')
+class TestSearchResultFilter:
+    """"""
+
+    def test_search_filter(self):
+        """
+
+        :return:
+        """
+        search_filter = HomePage(self.driver)
+        search_filter.get_maze_search().send_keys(book_titles_english)
+        search_filter.get_search_button().click()
+        search_filter.get_button_all_filters().click()
+
+        for i in range(6):
+            search_filter.get_product_type_and_availability()[i].click()
+
+        time.sleep(5)
+
+        # search_filter.get_product_type_and_availability()[0].click()
+        # time.sleep(5)
+        # search_filter.get_product_type_and_availability()[2].click()
+        # time.sleep(5)
+        # search_filter.get_button_show().click()
+        # time.sleep(5)
+
+        # for i in range(len(search_filter.get_product_type_and_availability())):
+        #     # lst.append(search_filter.get_product_type_and_availability()[i].text)
+        #     search_filter.get_product_type_and_availability()[0].click()
+        #     time.sleep(5)
+        #     search_filter.get_product_type_and_availability()[2].click()
+        #     time.sleep(5)
+        #     search_filter.get_button_show().click()
+
+        # print(lst[0:2])
