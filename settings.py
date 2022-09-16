@@ -79,3 +79,7 @@ list_of_values_in_the_search_field_edgar_allan_poe_raven = [
 list_of_values_in_the_search_field_empty_spaces = [
     '', ' ', '  '
 ]
+
+list_filter = [
+    (0, 3, 2)#, (0, 4, 3)
+]

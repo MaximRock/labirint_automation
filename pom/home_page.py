@@ -66,12 +66,14 @@ class HomePage(SeleniumBase):
         self.__your_basket_is_empty: str = "//span[contains(text(), 'Ваша корзина пуста. Почему?')]"
         self.__product_type_and_availability: str = "//div[@class='search-bl openable opened applied']" \
                                                     "//div[@class='inputs']/div"
-        self.__button_all_filters: str = "//div[@class='navisort-line-one swiper-slide swiper-slide-active']//span[contains(text(),'ВСЕ ФИЛЬТРЫ')]"
+        self.__button_all_filters: str = "//div[@class='navisort-line-one swiper-slide swiper-slide-active']" \
+                                         "//span[contains(text(),'ВСЕ ФИЛЬТРЫ')]"
         self.__button_show: str = "//input[@value='Показать' and @class='show-goods__button']"
         self.__button_reset: str = "//div[@class='search-form-reset-row']/span[contains(text(),'Сбросить')]"
+        self.__list_of_filtering_results_d_cart: str = "//div[@class='product-buy buy-avaliable fleft']/a"
 
 
-
+#//div[@data-title='Поиск: программирование на python']//div/a[contains(text(), 'В КОРЗИНУ')]
 #//div[@class='search-form-reset-row']/span[contains(text(),'Сбросить')]
 #//div[@class='mobile-subnavigagions-block only_mobile-block']//span[contains(text(),'ВСЕ ФИЛЬТРЫ')]
 #//div[@class='search-bl openable opened applied']//div[@class='inputs']/div
@@ -380,6 +382,20 @@ class HomePage(SeleniumBase):
         :return:
         """
         return self.is_clickable('xpath', self.__button_show, 'кнопка показать в меню фильтрации')
+
+    def get_button_reset(self):
+        """
+
+        :return:
+        """
+        return self.is_visible('xpath', self.__button_reset, 'кнопка сбросить в меню фильтрации')
+
+    def get_list_of_filtering_results_d_cart(self) -> list[WebElement]:
+        """
+
+        :return:
+        """
+        return self.are_visible('xpath', self.__list_of_filtering_results_d_cart, 'список фильтрации в корзину')
 
 
 

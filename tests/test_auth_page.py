@@ -11,7 +11,7 @@ from settings import my_code, my_login, my_cabinet, list_my_discount_code_negati
     list_header_personal_button_my_maze_dropdown_menu, book_russian, list_of_values_in_the_search_field_rassian, \
     book_author_russian, list_of_values_in_the_search_field_english, book_author_english, book_titles_english, \
     book_titles_edgar_raven, book_author_edgar_allan_poe, list_of_values_in_the_search_field_edgar_allan_poe_raven, \
-    list_of_values_in_the_search_field_empty_spaces
+    list_of_values_in_the_search_field_empty_spaces, list_filter
 
 
 @pytest.mark.usefixtures('setup')
@@ -335,6 +335,7 @@ class TestSearch:
 
         lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_edgar_raven)
         lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_edgar_allan_poe)
+
         if len(lst_book) > 0:
             for book in lst_book:
                 for author in lst_author:
@@ -366,6 +367,7 @@ class TestSearch:
         search_field = HomePage(self.driver)
         search_field.get_search_input_field(search_input_empty_spaces)
         current_url = search_field.get_current_url()
+
         if current_url == 'https://www.labirint.ru/':
             assert current_url == 'https://www.labirint.ru/', 'если url страниц равны тест passed'
         else:
@@ -426,7 +428,8 @@ class TestHeaderMenu:
 class TestSearchResultFilter:
     """"""
 
-    def test_search_filter(self):
+    @pytest.mark.parametrize("search_input_filter", list_filter)
+    def test_search_filter(self, search_input_filter):
         """
 
         :return:
@@ -435,11 +438,46 @@ class TestSearchResultFilter:
         search_filter.get_maze_search().send_keys(book_titles_english)
         search_filter.get_search_button().click()
         search_filter.get_button_all_filters().click()
+        search_filter.get_button_reset().click()
 
-        for i in range(6):
+        for i in range([i for i in search_input_filter]):
             search_filter.get_product_type_and_availability()[i].click()
+            time.sleep(5)
 
-        time.sleep(5)
+        search_filter.get_button_show().click()
+
+        for i in range(len(search_filter.get_list_of_filtering_results_d_cart())):
+            if search_filter.get_list_of_filtering_results_d_cart()[i].text == 'В КОРЗИНУ':
+                assert search_filter.get_list_of_filtering_results_d_cart()[i].text == 'В КОРЗИНУ'
+            elif search_filter.get_list_of_filtering_results_d_cart()[i].text == 'ПРЕДЗАКАЗ':
+                assert search_filter.get_list_of_filtering_results_d_cart()[i].text == 'ПРЕДЗАКАЗ'
+
+
+        # @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field_rassian)
+        # def test_book_russian_search(self, search_input_captain_daughter):
+        #     """Тест проверки поле ввода Поиск используя параметризацию на русском языке,
+        #     даные ввода файл settings.py в списке list_of_values_in_the_search_field_rassian"""
+        #     search_field = HomePage(self.driver)
+        #     search_field.get_search_input_field(search_input_captain_daughter)
+        #
+        #     lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_russian)
+        #     lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_russian)
+        #     if len(lst_book) > 0:
+        #         for book in lst_book:
+        #             for author in lst_author:
+        #                 assert author == book_author_russian, 'в списке авторов нет элементов'
+        #             assert book == book_russian, 'в списке книг нет элементов'
+        #     else:
+        #         print('список книг пустой')
+
+        # for element in range(len(header_menu.get_lst())):
+        #     header_menu.place_the_cursor(header_menu.get_header_menu_link_more())
+        #     header_menu.get_lst()[element].click()
+        #     list_header_menu_text.append(header_menu.get_header_menu_headlines().text)
+        #     assert header_menu.get_header_menu_headlines().text == list_header_menu_text[element]
+        # print(list_header_menu_text)
+
+
 
         # search_filter.get_product_type_and_availability()[0].click()
         # time.sleep(5)
