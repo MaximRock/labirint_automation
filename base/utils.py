@@ -22,3 +22,11 @@ class Utils:
             lst = []
         return lst
 
+    @staticmethod
+    def func(a: int, b: int, c: int):
+        """
+
+        :return:
+        """
+        for i in range(a, b, c):
+            pass

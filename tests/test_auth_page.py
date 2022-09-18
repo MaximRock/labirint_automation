@@ -427,9 +427,8 @@ class TestHeaderMenu:
 @pytest.mark.usefixtures('setup')
 class TestSearchResultFilter:
     """"""
-
-    @pytest.mark.parametrize("search_input_filter", list_filter)
-    def test_search_filter(self, search_input_filter):
+    @pytest.mark.parametrize("search_input", list_filter)
+    def test_search_filter_1(self, search_input):
         """
 
         :return:
@@ -440,18 +439,31 @@ class TestSearchResultFilter:
         search_filter.get_button_all_filters().click()
         search_filter.get_button_reset().click()
 
-        for i in range([i for i in search_input_filter]):
+        for i in range(*search_input):
             search_filter.get_product_type_and_availability()[i].click()
-            time.sleep(5)
+
+        time.sleep(3)
 
         search_filter.get_button_show().click()
 
-        for i in range(len(search_filter.get_list_of_filtering_results_d_cart())):
-            if search_filter.get_list_of_filtering_results_d_cart()[i].text == 'В КОРЗИНУ':
-                assert search_filter.get_list_of_filtering_results_d_cart()[i].text == 'В КОРЗИНУ'
-            elif search_filter.get_list_of_filtering_results_d_cart()[i].text == 'ПРЕДЗАКАЗ':
-                assert search_filter.get_list_of_filtering_results_d_cart()[i].text == 'ПРЕДЗАКАЗ'
+        for i in range(len(search_filter.get_list_of_filtering_results_cart())):
+            if search_filter.get_list_of_filtering_results_cart()[i].text == 'В КОРЗИНУ':
+                assert search_filter.get_list_of_filtering_results_cart()[i].text == 'В КОРЗИНУ'
+            elif search_filter.get_list_of_filtering_results_cart()[i].text == 'ПРЕДЗАКАЗ':
+                assert search_filter.get_list_of_filtering_results_cart()[i].text == 'ПРЕДЗАКАЗ'
+            elif search_filter.get_list_of_filtering_results_cart_pending()[i].text == 'ОЖИДАЕТСЯ':
+                assert search_filter.get_list_of_filtering_results_cart_pending()[i].text == 'ОЖИДАЕТСЯ'
+            elif search_filter.get_list_of_filtering_results_cart()[i].is_displayed() is False:
+                assert search_filter.get_list_of_filtering_results_cart()[i].is_displayed() is False
 
+
+                # for i in range(len(search_filter.get_list_of_filtering_results_cart())):
+                #     assert search_filter.get_list_of_filtering_results_cart()[i].text == 'ПРЕДЗАКАЗ'
+
+
+
+        #     elif search_filter.get_list_of_filtering_results_cart()[i].text == 'ПРЕДЗАКАЗ':
+        #         assert search_filter.get_list_of_filtering_results_cart()[i].text == 'ПРЕДЗАКАЗ'
 
         # @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field_rassian)
         # def test_book_russian_search(self, search_input_captain_daughter):
@@ -476,8 +488,6 @@ class TestSearchResultFilter:
         #     list_header_menu_text.append(header_menu.get_header_menu_headlines().text)
         #     assert header_menu.get_header_menu_headlines().text == list_header_menu_text[element]
         # print(list_header_menu_text)
-
-
 
         # search_filter.get_product_type_and_availability()[0].click()
         # time.sleep(5)

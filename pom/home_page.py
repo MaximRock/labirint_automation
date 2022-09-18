@@ -56,7 +56,8 @@ class HomePage(SeleniumBase):
                                          "//span[@class='region-location-icon-txt ']"
         self.__dropdown_delivery_region: str = "//div[contains(text(),'Укажите регион')]"
         self.__deferred_product: str = '//a[contains(@title,"Добавить в отложенные и отслеживать появление в продаже")]'
-        self.__set_aside_book: str = "//div[@class='product-cover short-title']/a[@class='cover']/span[@class='product-title']"
+        self.__set_aside_book: str = "//div[@class='product-cover short-title']/a[@class='cover']" \
+                                     "/span[@class='product-title']"
         self.__postponed: str = "//span[contains(text(),'Отложено')]"
         self.LST_OF_POSTPONED_BOOKS: list = ['Программирование на Python. Первые шаги', 'Капитанская дочка']
         self.__clear_button: str = "//a[contains(text(),'Очистить')]"
@@ -68,9 +69,12 @@ class HomePage(SeleniumBase):
                                                     "//div[@class='inputs']/div"
         self.__button_all_filters: str = "//div[@class='navisort-line-one swiper-slide swiper-slide-active']" \
                                          "//span[contains(text(),'ВСЕ ФИЛЬТРЫ')]"
-        self.__button_show: str = "//input[@value='Показать' and @class='show-goods__button']"
+        self.__button_show: str = "//input[@class='show-goods__button']"
         self.__button_reset: str = "//div[@class='search-form-reset-row']/span[contains(text(),'Сбросить')]"
-        self.__list_of_filtering_results_d_cart: str = "//div[@class='product-buy buy-avaliable fleft']/a"
+        self.__list_of_filtering_results_cart: str = "//div[@class='product-buy buy-avaliable fleft']/a"
+        self.__list_of_filtering_results_cart_pending: str = "//div[@class='product-buy buy-not-avaliable fleft']/a"
+
+
 
 
 #//div[@data-title='Поиск: программирование на python']//div/a[contains(text(), 'В КОРЗИНУ')]
@@ -390,12 +394,19 @@ class HomePage(SeleniumBase):
         """
         return self.is_visible('xpath', self.__button_reset, 'кнопка сбросить в меню фильтрации')
 
-    def get_list_of_filtering_results_d_cart(self) -> list[WebElement]:
+    def get_list_of_filtering_results_cart(self) -> list[WebElement]:
         """
 
         :return:
         """
-        return self.are_visible('xpath', self.__list_of_filtering_results_d_cart, 'список фильтрации в корзину')
+        return self.are_visible('xpath', self.__list_of_filtering_results_cart, 'список в корзину')
+
+    def get_list_of_filtering_results_cart_pending(self) -> list[WebElement]:
+        """
+
+        :return:
+        """
+        return self.are_visible('xpath', self.__list_of_filtering_results_cart_pending, 'список ожидается')
 
 
 

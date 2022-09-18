@@ -84,3 +84,8 @@ class SeleniumBase:
         alert_obj = self.driver.switch_to.alert
         return alert_obj.accept()
 
+
+        # for element in range(a, b, c):
+        #     lst = lst_w[element].click
+
+

@@ -222,9 +222,24 @@ import pytest
 #
 
 
-lst = [
-    (0, 3, 2), (0, 4, 3)
-]
+a, b, c = (0, 3, 2)
 
-print(lst[1])
+i = 1
 
+for i in range(a, b, c):
+    print(a, b, c)
+    b += 1
+    i += 1
+    print('=====================================================')
+    print(a, b, c)
+    if i > 1:
+        break
+
+
+
+
+# for i in lst:
+#     s = i
+#     print(s)
+#     for j in range(s):
+#         print(j)
