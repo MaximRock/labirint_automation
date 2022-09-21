@@ -74,7 +74,7 @@ class TestAuthorization:
 
     def test_icons_auth_social_elements(self):
         """тест проверки работоспособности иканок авторизации через социальные сети,
-        провереа скриншот страницы авторизации соц. сети
+        проверка скриншот страницы авторизации соц. сети
         в папке tests/screenshot/1_authorization/"""
 
         auth_page = HomePage(self.driver)
