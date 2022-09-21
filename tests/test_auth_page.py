@@ -23,7 +23,6 @@ class TestAuthorization:
         auth_page.get_discount_phone_mail(my_login)
         auth_page.get_my_discount_code(my_code)
         auth_page.get_automatic_closing().click()
-        # auth_page.sleep()
         auth_page.get_nav_link_my_maze().click()
         auth_page.screenshot('tests/screenshot/1_authorization/my_cabinet.png')
 
