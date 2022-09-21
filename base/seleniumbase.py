@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 
-from typing import List, Any
+from typing import List
 
 
 class SeleniumBase:
@@ -83,9 +83,3 @@ class SeleniumBase:
         """
         alert_obj = self.driver.switch_to.alert
         return alert_obj.accept()
-
-
-        # for element in range(a, b, c):
-        #     lst = lst_w[element].click
-
-

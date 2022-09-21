@@ -81,7 +81,5 @@ list_of_values_in_the_search_field_empty_spaces = [
 ]
 
 list_filter = [
-    (0, 3, 2), (0, 4, 3), (0, 5, 4), (0, 6, 5)
+    (0, 3, 2), (0, 4, 3), (1, 3)
 ]
-
-# list_filter = 0, 4, 3

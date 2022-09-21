@@ -1,4 +1,5 @@
 import re
+from itertools import chain
 
 import pytest
 
@@ -222,24 +223,32 @@ import pytest
 #
 
 
-a, b, c = (0, 3, 2)
+# a = [0, 1, 2, 3, 4, 5, 6, 7]
 
-i = 1
+# list_filter = [
+#      (0, 1), (2, 4)
+# ]
+#
+# a = chain(range(*list_filter), range(*list_filter))
 
-for i in range(a, b, c):
-    print(a, b, c)
-    b += 1
-    i += 1
-    print('=====================================================')
-    print(a, b, c)
-    if i > 1:
-        break
+# list_filter = [
+#     {(0, 1): (3, 2)}, {(0, 1): (4, 3)}, {(0, 1): (2, 4)}
+# ]
 
+# list_filter = [
+#     (0, 1), (0, 1), (0, 1)
+# ]
+#
+# list_filter_1 = {
+#      (3, 2), (4, 3), (2, 4)
+# }
 
+# a = chain(range(1), range(2, 4))
 
+# for i in chain(range(0, 1), range(2, 4)):
+#     print(i)
 
-# for i in lst:
-#     s = i
-#     print(s)
-#     for j in range(s):
-#         print(j)
+# print(chain(range(*list_filter), range(*list_filter_1)))
+
+for i in range(0, 2):
+    print(1)

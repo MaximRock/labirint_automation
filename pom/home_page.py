@@ -1,4 +1,3 @@
-import time
 import re
 
 from base.seleniumbase import SeleniumBase
@@ -74,24 +73,6 @@ class HomePage(SeleniumBase):
         self.__list_of_filtering_results_cart: str = "//div[@class='product-buy buy-avaliable fleft']/a"
         self.__list_of_filtering_results_cart_pending: str = "//div[@class='product-buy buy-not-avaliable fleft']/a"
 
-
-
-
-#//div[@data-title='Поиск: программирование на python']//div/a[contains(text(), 'В КОРЗИНУ')]
-#//div[@class='search-form-reset-row']/span[contains(text(),'Сбросить')]
-#//div[@class='mobile-subnavigagions-block only_mobile-block']//span[contains(text(),'ВСЕ ФИЛЬТРЫ')]
-#//div[@class='search-bl openable opened applied']//div[@class='inputs']/div
-#//span[contains(text(), 'Ваша корзина пуста. Почему?')]
-#//a[contains(text(), 'Очистить корзину')]
-#"//div[@class='product-cover']/a[@class='cover']/span[@class='product-title']"
-#//input[@value='Автоматически закроется через 3 сек.']
-#//div[@id='messages-text']/p    Выбранные товары удалены!
-#//a[contains(text(),'Очистить')]
-#//div[@class='product-cover short-title']/a[@class='cover']/span[@class='product-title']
-#//span[contains(text(),'Отложено')]
-#//div[@class='product need-watch product_labeled product-cart watched']//span[contains(text(),'Капитанская дочка')]
-#//a[contains(@title,"Добавить в отложенные и отслеживать появление в продаже")]
-
 # ===================== Класс TestAuthorization =======================================================================
     def get_nav_link_my_maze(self) -> WebElement:
         """Панель личного кабинета ссылка - мой лобиринт"""
@@ -133,9 +114,9 @@ class HomePage(SeleniumBase):
         """кнопка Войти для фикстуры"""
         return self.is_visible('css', self.__button_sig_in, 'кнопка Войти для фикстуры')
 
-    def sleep(self) -> object:
-        """3-х секундное ожидание входа"""
-        return time.sleep(self.__sleep)
+    # def sleep(self) -> object:
+    #     """3-х секундное ожидание входа"""
+    #     return time.sleep(self.__sleep)
 
     def get_discount_phone_mail(self, discount_phone_mail) -> None:
         """Метод класса - кликаем на поле ввода, очищаем поле ввода,
@@ -407,6 +388,5 @@ class HomePage(SeleniumBase):
         :return:
         """
         return self.are_visible('xpath', self.__list_of_filtering_results_cart_pending, 'список ожидается')
-
 
 

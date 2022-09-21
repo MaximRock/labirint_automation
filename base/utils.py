@@ -1,7 +1,4 @@
-import re
-from typing import List, Any
-
-from selenium.webdriver.remote.webelement import WebElement
+from typing import List
 
 
 class Utils:
@@ -14,19 +11,10 @@ class Utils:
     @staticmethod
     def get_list_creation(lst=None) -> list:
         """
-
-        :param lst:
-        :return:
+        Создание списка
+        :param lst: неопределен
+        :return: список
         """
         if lst is None:
             lst = []
         return lst
-
-    @staticmethod
-    def func(a: int, b: int, c: int):
-        """
-
-        :return:
-        """
-        for i in range(a, b, c):
-            pass
