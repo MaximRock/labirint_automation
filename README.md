@@ -29,7 +29,6 @@
  - скачать selenium - https://chromedriver.storage.googleapis.com/(версия selenium для браузера)/
  - установка - pip3 install -r requirements
  - команда для терминала - pytest -s -v tests/test_page.py::/testClass/::/test/
- - Tак же тесты можно запускать через - run test в PyCharm.
 
 ___
 Класс TestAuthorization - тестирование авторизации на сайте.
