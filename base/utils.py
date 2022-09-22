@@ -13,7 +13,7 @@ class Utils:
         """
         Создание списка
         :param lst: неопределен
-        :return: список
+        :return: list
         """
         if lst is None:
             lst = []

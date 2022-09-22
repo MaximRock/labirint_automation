@@ -71,7 +71,7 @@ class HomePage(SeleniumBase):
         self.__button_show: str = "//input[@class='show-goods__button']"
         self.__button_reset: str = "//div[@class='search-form-reset-row']/span[contains(text(),'Сбросить')]"
         self.__list_of_filtering_results_cart: str = "//div[@class='product-buy buy-avaliable fleft']/a"
-        self.__list_of_filtering_results_cart_pending: str = "//div[@class='product-buy buy-not-avaliable fleft']/a"
+
 
 # ===================== Класс TestAuthorization =======================================================================
     def get_nav_link_my_maze(self) -> WebElement:
@@ -95,7 +95,7 @@ class HomePage(SeleniumBase):
         return self.is_visible('css', self.__check_and_login, 'кнопка проверить и войти')
 
     def get_automatic_closing(self):
-        """"""
+        """Регистрация - кнопка автоматического закрытия"""
         return self.is_visible('xpath', self.__automatic_closing, 'кнопка автоматического закрытия')
 
     def personal_cabinet(self) -> str:
@@ -114,9 +114,7 @@ class HomePage(SeleniumBase):
         """кнопка Войти для фикстуры"""
         return self.is_visible('css', self.__button_sig_in, 'кнопка Войти для фикстуры')
 
-    # def sleep(self) -> object:
-    #     """3-х секундное ожидание входа"""
-    #     return time.sleep(self.__sleep)
+
 
     def get_discount_phone_mail(self, discount_phone_mail) -> None:
         """Метод класса - кликаем на поле ввода, очищаем поле ввода,
@@ -224,8 +222,8 @@ class HomePage(SeleniumBase):
 
     def get_message_deleted_in_deferred(self):
         """
-
-        :return:
+        Отложеные - Выбранные товары удалены!
+        :return: ожидаем появление текста Выбранные товары удалены!
         """
         return self.is_visible('xpath', self.__message_deleted_in_deferred, 'сообщение удаленых книг из отложеного')
 
@@ -349,44 +347,35 @@ class HomePage(SeleniumBase):
 
     def get_product_type_and_availability(self) -> list[WebElement]:
         """
-
-        :return:
+        фильтры тип товара наличие
+        :return: список фильтров
         """
         return self.are_visible('xpath', self.__product_type_and_availability, 'фильтры тип товара наличие')
 
-    def get_button_all_filters(self):
+    def get_button_all_filters(self) -> WebElement:
         """
-
-        :return:
+        кнопка все фильтры
+        :return: ожидание элемента кнопка все фильтры
         """
         return self.is_clickable('xpath', self.__button_all_filters, 'кнопка все фильтры')
 
-    def get_button_show(self):
+    def get_button_show(self) -> WebElement:
         """
-
-        :return:
+        кнопка показать в меню фильтрации
+        :return: ожидание элемента кнопка показать
         """
         return self.is_clickable('xpath', self.__button_show, 'кнопка показать в меню фильтрации')
 
-    def get_button_reset(self):
+    def get_button_reset(self) -> WebElement:
         """
-
-        :return:
+        кнопка сбросить в меню фильтрации
+        :return: ожидание элемента кнопка сбросить
         """
         return self.is_visible('xpath', self.__button_reset, 'кнопка сбросить в меню фильтрации')
 
     def get_list_of_filtering_results_cart(self) -> list[WebElement]:
         """
-
-        :return:
+        список в корзину
+        :return: список в корзину
         """
         return self.are_visible('xpath', self.__list_of_filtering_results_cart, 'список в корзину')
-
-    def get_list_of_filtering_results_cart_pending(self) -> list[WebElement]:
-        """
-
-        :return:
-        """
-        return self.are_visible('xpath', self.__list_of_filtering_results_cart_pending, 'список ожидается')
-
-

@@ -3,21 +3,21 @@
 
 Структура проекта:
 
-   - папка base:
-       - файл [base/seleniumbase.py] (base/seleniumbase.py)- функции ожидания локаторов, используемые в разных тестах.
-       - файл utils.py - утилиты для тестов.
-   - папка pom:
-       - файл home_page.py - локаторы и функции главной страницы.
+   - base:
+      - seleniumbase.py - функции ожидания локаторов, используемые в разных тестах.
+      - utils.py - утилиты для тестов.
+   - pom:
+       - home_page.py - локаторы и функции главной страницы.
    - папка tests:
-      - файл  - test_page.py - тесты главной страницы.
-      - папка screenshot: скриншоты тестов
-          - папка 1_authorization
+      - test_page.py - тесты главной страницы.
+      - screenshot: скриншоты тестов
+          - 1_authorization
               - скриншоты авторизации
-          - папка 2_home_page_header_personal
+          - 2_home_page_header_personal
               - скриншоты меню персональный кабинет
-          - папка 3_home_page_header_personal_button_my_maze
+          - 3_home_page_header_personal_button_my_maze
               - скриншоты кнопки мой лабиринт в меню персонального кабинета
-   - файл conftest.py - фикстуры для тестов.
+   - conftest.py - фикстуры для тестов.
    - settings.py - тестовые данные для тестов.
    - requiremets.txt - используемые библиотеки.
 
@@ -26,7 +26,7 @@
 
  - selenium - установить по пути path в операционной системе, в windows - C:\Windows\System32, так же тесты можно 
 запускать через run test в PyCharm.
- - скачать selenium - https://chromedriver.storage.googleapis.com/версия selenium для браузера/
+ - скачать selenium - https://chromedriver.storage.googleapis.com/(версия selenium для браузера)/
  - установка - pip3 install -r requirements
  - команда для терминала - pytest -s -v tests/test_page.py::/testClass/::/test/
  - Tак же тесты можно запускать через - run test в PyCharm.

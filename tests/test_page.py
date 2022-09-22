@@ -300,8 +300,6 @@ class TestSearch:
 
         print(f'вводимое значение {search_input_programming_on_python}')
 
-
-
     @pytest.mark.parametrize("search_input_edgar_allan_poe_raven",
                              list_of_values_in_the_search_field_edgar_allan_poe_raven)
     def test_edgar_allan_poe_raven(self, search_input_edgar_allan_poe_raven):
@@ -323,8 +321,6 @@ class TestSearch:
             print('список книг пустой')
 
         print(f'вводимое значение {search_input_edgar_allan_poe_raven}')
-
-
 
     @pytest.mark.parametrize("search_input_empty_spaces",
                              list_of_values_in_the_search_field_empty_spaces)
