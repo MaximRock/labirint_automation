@@ -260,8 +260,6 @@ class TestSearch:
                 assert book == book_russian, 'в списке книг нет элементов'
         else:
             print('список книг пустой')
-        #     assert lst_book == book_russian, 'список книг пустой'
-        #     assert lst_author == book_author_russian, 'список аторов пустой'
 
     @pytest.mark.parametrize("search_input_captain_daughter", list_of_values_in_the_search_field_rassian)
     def test_book_russian_search(self, search_input_captain_daughter):
@@ -279,8 +277,6 @@ class TestSearch:
                 assert book == book_russian, 'в списке книг нет элементов'
         else:
             print('список книг пустой')
-        #     assert lst_book == book_russian, 'список книг пустой'
-        #     assert lst_book == book_author_russian, 'список ваторов пустой'
 
         print(f'вводимое значение {search_input_captain_daughter}')
 
@@ -301,23 +297,10 @@ class TestSearch:
                 assert book == book_titles_english, 'в списке книг нет элементов'
         else:
             print('список книг пустой')
-        #     assert lst_book == book_author_english1, 'список книг пустой'
 
         print(f'вводимое значение {search_input_programming_on_python}')
 
-        # lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_english)
-        # if len(lst_book) > 0:
-        #     for element in lst_book:
-        #         assert element == book_titles_english, 'в списке книг есть элементы'
-        # else:
-        #     assert lst_book == book_titles_english, 'список книг пустой'
-        #
-        # lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_english)
-        # if len(lst_book) > 0:
-        #     for element in lst_author:
-        #         assert element == book_author_english, 'в списке книг есть элементы'
-        # else:
-        #     assert lst_book == book_author_english, 'список книг пустой'
+
 
     @pytest.mark.parametrize("search_input_edgar_allan_poe_raven",
                              list_of_values_in_the_search_field_edgar_allan_poe_raven)
@@ -341,19 +324,7 @@ class TestSearch:
 
         print(f'вводимое значение {search_input_edgar_allan_poe_raven}')
 
-        # lst_book = search_field.get_book_string(search_field.get_name_of_the_book(), book_titles_edgar_raven)
-        # if len(lst_book) > 0:
-        #     for element in lst_book:
-        #         assert element == book_titles_edgar_raven, 'в списке книг есть элементы'
-        # else:
-        #     assert lst_book == book_titles_edgar_raven, 'список книг пустой'
-        #
-        # lst_author = search_field.get_book_string(search_field.get_author_book(), book_author_edgar_allan_poe)
-        # if len(lst_author) > 0:
-        #     for element in lst_book:
-        #         assert element == book_titles_edgar_raven, 'в списке авторов есть элементы'
-        # else:
-        #     assert lst_author == book_titles_edgar_raven, 'список авторов пустой'
+
 
     @pytest.mark.parametrize("search_input_empty_spaces",
                              list_of_values_in_the_search_field_empty_spaces)
