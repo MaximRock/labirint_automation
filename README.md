@@ -4,7 +4,7 @@
 Структура проекта:
 
    - папка base:
-       - файл seleniumbase.py - функции ожидания локаторов, используемые в разных тестах.
+       - файл [base/seleniumbase.py] (base/seleniumbase.py)- функции ожидания локаторов, используемые в разных тестах.
        - файл utils.py - утилиты для тестов.
    - папка pom:
        - файл home_page.py - локаторы и функции главной страницы.
@@ -24,8 +24,12 @@
 ---
 Запуск тестов:
 
- - selenium - установить по пути path в операционной системе, в windows - C:\Windows\System32
- - команда для терминала - pytest -s -v tests/test_auth_page.py::TestHeaderMenu::test_header_menu_link_delivery_region
+ - selenium - установить по пути path в операционной системе, в windows - C:\Windows\System32, так же тесты можно 
+запускать через run test в PyCharm.
+ - скачать selenium - https://chromedriver.storage.googleapis.com/версия selenium для браузера/
+ - установка - pip3 install -r requirements
+ - команда для терминала - pytest -s -v tests/test_page.py::/testClass/::/test/
+ - Tак же тесты можно запускать через - run test в PyCharm.
 
 ___
 Класс TestAuthorization - тестирование авторизации на сайте.
@@ -98,8 +102,8 @@ ___
 данные ввода файл settings.py в списке list_of_values_in_the_search_field_english
 
  - test_edgar_allan_poe_raven - Тест проверки нижнего предела поиска - осуществляем поиск по имени автора 'По Эдгар Аллан' и
-названия книги 'Ворон', первый тест passed, остальные failed,
-даные ввода файл settings.py в списке list_of_values_in_the_search_field_edgar_allan_poe_raven
+названия книги 'Ворон', первый тест passed, остальные failed, даные ввода файл settings.py в списке 
+list_of_values_in_the_search_field_edgar_allan_poe_raven, 
 
  - test_field_empty_spaces - Тест проверки поиска при пустом значении, при вводе одного пробела, двух пробелов
 
