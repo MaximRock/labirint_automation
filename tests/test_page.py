@@ -287,7 +287,7 @@ class TestSearch:
     @pytest.mark.parametrize("search_input_programming_on_python", list_of_values_in_the_search_field_english)
     def test_book_english_search(self, search_input_programming_on_python):
         """Тест проверки поле ввода Поиск используя параметризацию на английском языке,
-        даные ввода файл settings.py в списке list_of_values_in_the_search_field_english"""
+        данные ввода файл settings.py в списке list_of_values_in_the_search_field_english"""
         search_field = HomePage(self.driver)
         search_field.get_search_input_field(search_input_programming_on_python)
 
@@ -420,13 +420,13 @@ class TestHeaderMenu:
 
 @pytest.mark.usefixtures('setup')
 class TestSearchResultFilter:
-    """"""
+    """Тест фильтрации результатов поиска"""
 
     @pytest.mark.parametrize("search_input", list_filter)
     def test_search_filter(self, search_input):
         """
         Тест проверки фильтрации поиска
-        :return:
+        :return: совпадение текста 'В КОРЗИНУ', 'ПРЕДЗАКАЗ', 'КУПИТЬ'
         """
         search_filter = HomePage(self.driver)
         search_filter.get_maze_search().send_keys(book_titles_english)
